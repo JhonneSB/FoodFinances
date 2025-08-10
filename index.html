@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodFinances - Gestão Financeira para Microempreendedores</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee; /* Azul vibrante - transmite confiança e profissionalismo */
+            --primary-light: #4895ef; /* Azul mais claro */
+            --secondary-color: #3f37c9; /* Azul mais escuro */
+            --accent-color: #4cc9f0; /* Azul claro - para destaques */
+            --success-color: #38b000; /* Verde - sucesso/positivo */
+            --danger-color: #f72585; /* Rosa vibrante - erros/atenção */
+            --warning-color: #ff9e00; /* Amarelo/laranja - alertas */
+            --info-color: #4895ef; /* Azul - informações */
+            
+            --light-color: #f8f9fa; /* Fundo claro */
+            --dark-color: #212529; /* Texto escuro */
+            --gray-color: #6c757d; /* Texto cinza */
+            --light-gray: #e9ecef; /* Bordas e fundos */
+            
+            --text-color: var(--dark-color);
+            --text-light: #f8f9fa;
+            
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.1);
+            
+            --border-radius: 12px;
+            --border-radius-sm: 6px;
+            
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-light);
+            padding: 25px 0;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 3px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .card-title {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+            font-size: 1.4rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i {
+            font-size: 1.2em;
+            color: var(--accent-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+            font-size: 0.95rem;
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            color: var(--gray-color);
+            font-size: 0.8rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius-sm);
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: white;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+        }
+
+        button.danger {
+            background-color: var(--danger-color);
+        }
+
+        button.warning {
+            background-color: var(--warning-color);
+            color: var(--dark-color);
+        }
+
+        button.info {
+            background-color: var(--info-color);
+        }
+
+        button.success {
+            background-color: var(--success-color);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-group button {
+            flex: 1 1 auto;
+            min-width: 120px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: var(--border-radius-sm);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: rgba(67, 97, 238, 0.03);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.success {
+            background-color: rgba(56, 176, 0, 0.1);
+            color: var(--success-color);
+        }
+
+        .badge.danger {
+            background-color: rgba(247, 37, 133, 0.1);
+            color: var(--danger-color);
+        }
+
+        .badge.warning {
+            background-color: rgba(255, 158, 0, 0.1);
+            color: var(--warning-color);
+        }
+
+        .badge.info {
+            background-color: rgba(72, 149, 239, 0.1);
+            color: var(--info-color);
+        }
+
+        .results {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .result-item {
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--border-radius-sm);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .result-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .result-item h3 {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .result-value {
+            font-weight: 700;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .profit {
+            color: var(--success-color);
+        }
+
+        .loss {
+            color: var(--danger-color);
+        }
+
+        .neutral {
+            color: var(--gray-color);
+        }
+
+        .chart-container {
+            height: 350px;
+            margin-top: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--light-gray);
+            position: relative;
+        }
+
+        .tab {
+            padding: 12px 25px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--gray-color);
+            position: relative;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab:hover {
+            color: var(--primary-color);
+        }
+
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .tab.active i {
+            color: var(--primary-color);
+        }
+
+        .tab i {
+            font-size: 1.1em;
+            color: var(--gray-color);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .ingredient-list, .packaging-list {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .ingredient-item, .packaging-item {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            background-color: white;
+            padding: 15px;
+            border-radius: var(--border-radius-sm);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .ingredient-item:hover, .packaging-item:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .ingredient-item input, .packaging-item input {
+            flex: 1;
+        }
+
+        .remove-btn {
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .remove-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 5px rgba(247, 37, 133, 0.3);
+        }
+
+        .add-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: var(--transition);
+            align-self: flex-start;
+        }
+
+        .add-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            background-color: var(--dark-color);
+            color: var(--text-light);
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        footer a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 15px 0;
+        }
+
+        .footer-links a {
+            color: var(--light-gray);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .print-btn {
+            margin-top: 30px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: var(--border-radius-sm);
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateX(150%);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-width: 350px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background-color: var(--danger-color);
+        }
+
+        .toast.warning {
+            background-color: var(--warning-color);
+            color: var(--dark-color);
+        }
+
+        .toast.info {
+            background-color: var(--info-color);
+        }
+
+        .toast.success {
+            background-color: var(--success-color);
+        }
+
+        .toast i {
+            font-size: 1.5rem;
+        }
+
+        .close-toast {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0;
+            margin-left: 15px;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .close-toast:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .toast-message {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .results {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .card-title {
+                font-size: 1.3rem;
+            }
+            
+            .tab {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .ingredient-item, .packaging-item {
+                flex-wrap: wrap;
+            }
+            
+            .ingredient-item input, .packaging-item input {
+                min-width: 100%;
+            }
+            
+            .remove-btn {
+                margin-left: auto;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 5px;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .tab {
+                padding: 10px 15px;
+                font-size: 0.85rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .btn-group button {
+                width: 100%;
+            }
+            
+            .results {
+                grid-template-columns: 1fr;
+            }
+            
+            .toast {
+                max-width: calc(100% - 40px);
+                right: 20px;
+                bottom: 20px;
+            }
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            border-radius: var(--border-radius-sm);
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+            font-weight: normal;
+        }
+
+        .tooltip .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--dark-color) transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-calculator"></i> FoodFinances</h1>
+            <p class="subtitle">Sua ferramenta completa para gestão financeira de alimentos e bebidas</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" data-tab="product">
+                <i class="fas fa-utensils"></i> Produto
+            </div>
+            <div class="tab" data-tab="ingredients">
+                <i class="fas fa-carrot"></i> Ingredientes
+            </div>
+            <div class="tab" data-tab="packaging">
+                <i class="fas fa-box-open"></i> Embalagem
+            </div>
+            <div class="tab" data-tab="ifood">
+                <i class="fas fa-motorcycle"></i> iFood
+            </div>
+            <div class="tab" data-tab="results">
+                <i class="fas fa-chart-line"></i> Resultados
+            </div>
+            <div class="tab" data-tab="history">
+                <i class="fas fa-history"></i> Histórico
+            </div>
+        </div>
+
+        <!-- Product Tab -->
+        <div class="tab-content active" id="product-tab">
+            <div class="card fade-in">
+                <h2 class="card-title"><i class="fas fa-info-circle"></i> Informações do Produto</h2>
+                <div class="form-group">
+                    <label for="product-name">Nome do Produto</label>
+                    <input type="text" id="product-name" placeholder="Ex: Brigadeiro Gourmet">
+                </div>
+                <div class="form-group">
+                    <label for="product-yield">Rendimento (quantidade produzida)</label>
+                    <input type="number" id="product-yield" placeholder="Ex: 30" min="1" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="product-description">Descrição (opcional)</label>
+                    <input type="text" id="product-description" placeholder="Descreva seu produto">
+                </div>
+                <div class="btn-group">
+                    <button id="save-product">
+                        <i class="fas fa-save"></i> Salvar Produto
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ingredients Tab -->
+        <div class="tab-content" id="ingredients-tab">
+            <div class="card fade-in">
+                <h2 class="card-title"><i class="fas fa-carrot"></i> Ingredientes</h2>
+                <p>Adicione todos os ingredientes utilizados na receita</p>
+                
+                <div class="ingredient-list" id="ingredient-list">
+                    <!-- Ingredient items will be added here dynamically -->
+                </div>
+                
+                <button class="add-btn" id="add-ingredient">
+                    <i class="fas fa-plus"></i>
+                </button>
+                
+                <div class="form-group">
+                    <label for="additional-costs">Custos Adicionais (opcional)</label>
+                    <input type="number" id="additional-costs" placeholder="Ex: 10,00" min="0" step="0.01">
+                    <small>Inclua custos como gás, energia, água, mão de obra, etc.</small>
+                </div>
+                
+                <div class="btn-group">
+                    <button id="calculate-ingredients">
+                        <i class="fas fa-calculator"></i> Calcular Custo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Packaging Tab -->
+        <div class="tab-content" id="packaging-tab">
+            <div class="card fade-in">
+                <h2 class="card-title"><i class="fas fa-box-open"></i> Embalagem</h2>
+                <p>Adicione todos os itens de embalagem utilizados</p>
+                
+                <div class="packaging-list" id="packaging-list">
+                    <!-- Packaging items will be added here dynamically -->
+                </div>
+                
+                <button class="add-btn" id="add-packaging">
+                    <i class="fas fa-plus"></i>
+                </button>
+                
+                <div class="btn-group">
+                    <button id="calculate-packaging">
+                        <i class="fas fa-calculator"></i> Calcular Custo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- iFood Tab -->
+        <div class="tab-content" id="ifood-tab">
+            <div class="card fade-in">
+                <h2 class="card-title"><i class="fas fa-motorcycle"></i> Configurações iFood</h2>
+                <div class="form-group">
+                    <label for="ifood-fee">Taxa do iFood (%)</label>
+                    <input type="number" id="ifood-fee" placeholder="Ex: 25" min="0" max="100" value="25">
+                </div>
+                <div class="form-group">
+                    <label for="delivery-fee">Taxa de Entrega (R$)</label>
+                    <input type="number" id="delivery-fee" placeholder="Ex: 5,00" min="0" step="0.01" value="5">
+                </div>
+                <div class="form-group">
+                    <label for="sale-price">Preço de Venda (R$)</label>
+                    <input type="number" id="sale-price" placeholder="Ex: 8,00" min="0" step="0.01">
+                </div>
+                <div class="btn-group">
+                    <button id="calculate-ifood">
+                        <i class="fas fa-calculator"></i> Calcular Vendas
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Tab -->
+        <div class="tab-content" id="results-tab">
+            <div class="card fade-in">
+                <h2 class="card-title"><i class="fas fa-chart-pie"></i> Resultados Financeiros</h2>
+                
+                <div class="results" id="results-container">
+                    <div class="result-item">
+                        <h3>Custo Total da Receita</h3>
+                        <span class="result-value neutral" id="total-recipe-cost">R$ 0,00</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <h3>Custo por Unidade</h3>
+                        <span class="result-value neutral" id="unit-cost">R$ 0,00</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <h3>Preço de Venda Sugerido</h3>
+                        <span class="result-value" id="suggested-price">R$ 0,00</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <h3>Preço de Venda no iFood</h3>
+                        <span class="result-value" id="ifood-price">R$ 0,00</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <h3>Lucro por Unidade (Venda Direta)</h3>
+                        <span class="result-value profit" id="unit-profit">R$ 0,00</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <h3>Lucro por Unidade (iFood)</h3>
+                        <span class="result-value profit" id="ifood-profit">R$ 0,00</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <h3>Margem de Lucro</h3>
+                        <span class="result-value profit" id="profit-margin">0%</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <h3>Lucro Total da Receita</h3>
+                        <span class="result-value profit" id="total-profit">R$ 0,00</span>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="profitChart"></canvas>
+                </div>
+                
+                <div class="btn-group print-btn">
+                    <button id="save-analysis" class="success">
+                        <i class="fas fa-save"></i> Salvar Análise
+                    </button>
+                    <button id="print-results" class="info">
+                        <i class="fas fa-file-pdf"></i> Exportar Resultados
+                    </button>
+                    <button id="print-chart" class="info">
+                        <i class="fas fa-chart-bar"></i> Exportar Gráfico
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Tab -->
+        <div class="tab-content" id="history-tab">
+            <div class="card fade-in">
+                <h2 class="card-title"><i class="fas fa-history"></i> Histórico de Análises</h2>
+                <p>Aqui estão todas as análises que você salvou</p>
+                
+                <table id="history-table">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Data</th>
+                            <th>Custo Unit.</th>
+                            <th>Preço Venda</th>
+                            <th>Lucro</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- History items will be added here dynamically -->
+                    </tbody>
+                </table>
+                
+                <div class="btn-group">
+                    <button id="clear-history" class="danger">
+                        <i class="fas fa-trash-alt"></i> Limpar Histórico
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>FoodFinances - Sistema de Gestão Financeira para Microempreendedores de Alimentos</p>
+            
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-question-circle"></i> Ajuda</a>
+                <a href="#"><i class="fas fa-envelope"></i> Contato</a>
+                <a href="#"><i class="fas fa-shield-alt"></i> Privacidade</a>
+            </div>
+            
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            
+            <p>© <span id="current-year"></span> - Todos os direitos reservados</p>
+            <p>Desenvolvido com ❤️ por <a href="#" id="developer-link">Sua Equipe</a></p>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <div class="toast-content">
+            <div class="toast-title">Sucesso</div>
+            <div class="toast-message" id="toast-message">Operação realizada com sucesso!</div>
+        </div>
+        <button class="close-toast">&times;</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Elementos do DOM
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const productNameInput = document.getElementById('product-name');
+    const productYieldInput = document.getElementById('product-yield');
+    const productDescriptionInput = document.getElementById('product-description');
+    const saveProductBtn = document.getElementById('save-product');
+    const addIngredientBtn = document.getElementById('add-ingredient');
+    const ingredientList = document.getElementById('ingredient-list');
+    const additionalCostsInput = document.getElementById('additional-costs');
+    const calculateIngredientsBtn = document.getElementById('calculate-ingredients');
+    const addPackagingBtn = document.getElementById('add-packaging');
+    const packagingList = document.getElementById('packaging-list');
+    const calculatePackagingBtn = document.getElementById('calculate-packaging');
+    const ifoodFeeInput = document.getElementById('ifood-fee');
+    const deliveryFeeInput = document.getElementById('delivery-fee');
+    const salePriceInput = document.getElementById('sale-price');
+    const calculateIfoodBtn = document.getElementById('calculate-ifood');
+    const saveAnalysisBtn = document.getElementById('save-analysis');
+    const printResultsBtn = document.getElementById('print-results');
+    const printChartBtn = document.getElementById('print-chart');
+    const clearHistoryBtn = document.getElementById('clear-history');
+    const historyTable = document.getElementById('history-table').getElementsByTagName('tbody')[0];
+    const toast = document.getElementById('toast');
+    const closeToastBtn = document.querySelector('.close-toast');
+    const toastMessage = document.getElementById('toast-message');
+    const currentYearSpan = document.getElementById('current-year');
+    
+    // Variáveis de estado
+    let currentProduct = {
+        name: '',
+        yield: 1,
+        description: '',
+        ingredients: [],
+        packaging: [],
+        additionalCosts: 0,
+        ifoodFee: 25,
+        deliveryFee: 5,
+        salePrice: 0,
+        totalCost: 0,
+        unitCost: 0,
+        suggestedPrice: 0,
+        ifoodPrice: 0,
+        unitProfit: 0,
+        ifoodProfit: 0,
+        profitMargin: 0,
+        totalProfit: 0,
+        createdAt: null
+    };
+    
+    let profitChart = null;
+    let history = JSON.parse(localStorage.getItem('foodFinancesHistory')) || [];
+    
+    // Configuração inicial
+    currentYearSpan.textContent = new Date().getFullYear();
+    ifoodFeeInput.value = currentProduct.ifoodFee;
+    deliveryFeeInput.value = currentProduct.deliveryFee;
+    
+    // Adiciona um ingrediente padrão ao carregar
+    addIngredientItem();
+    addPackagingItem();
+    
+    // Event Listeners
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+    });
+    
+    saveProductBtn.addEventListener('click', saveProduct);
+    addIngredientBtn.addEventListener('click', addIngredientItem);
+    calculateIngredientsBtn.addEventListener('click', calculateIngredientsCost);
+    addPackagingBtn.addEventListener('click', addPackagingItem);
+    calculatePackagingBtn.addEventListener('click', calculatePackagingCost);
+    calculateIfoodBtn.addEventListener('click', calculateIfoodResults);
+    saveAnalysisBtn.addEventListener('click', saveAnalysis);
+    printResultsBtn.addEventListener('click', printResults);
+    printChartBtn.addEventListener('click', printChart);
+    clearHistoryBtn.addEventListener('click', clearHistory);
+    closeToastBtn.addEventListener('click', hideToast);
+    
+    // Funções
+    
+    // Alternar entre abas
+    function switchTab(tabId) {
+        tabs.forEach(tab => {
+            if (tab.dataset.tab === tabId) {
+                tab.classList.add('active');
+            } else {
+                tab.classList.remove('active');
+            }
+        });
+        
+        tabContents.forEach(content => {
+            if (content.id === `${tabId}-tab`) {
+                content.classList.add('active');
+            } else {
+                content.classList.remove('active');
+            }
+        });
+        
+        // Se for a aba de resultados, calcular tudo
+        if (tabId === 'results') {
+            calculateAll();
+        }
+        
+        // Se for a aba de histórico, carregar os dados
+        if (tabId === 'history') {
+            loadHistory();
+        }
+    }
+    
+    // Salvar informações do produto
+    function saveProduct() {
+        currentProduct.name = productNameInput.value.trim();
+        currentProduct.yield = parseInt(productYieldInput.value) || 1;
+        currentProduct.description = productDescriptionInput.value.trim();
+        
+        if (!currentProduct.name) {
+            showToast('Por favor, insira um nome para o produto', 'error');
+            return;
+        }
+        
+        showToast('Informações do produto salvas com sucesso!', 'success');
+        switchTab('ingredients');
+    }
+    
+    // Adicionar item de ingrediente
+    function addIngredientItem(ingredient = null) {
+        const ingredientId = Date.now();
+        const ingredientItem = document.createElement('div');
+        ingredientItem.className = 'ingredient-item';
+        ingredientItem.dataset.id = ingredientId;
+        
+        ingredientItem.innerHTML = `
+            <input type="text" class="ingredient-name" placeholder="Nome do ingrediente" value="${ingredient ? ingredient.name : ''}">
+            <input type="number" class="ingredient-quantity" placeholder="Quantidade" min="0" step="0.001" value="${ingredient ? ingredient.quantity : ''}">
+            <input type="text" class="ingredient-unit" placeholder="Unidade (g, ml, etc.)" value="${ingredient ? ingredient.unit : ''}">
+            <input type="number" class="ingredient-price" placeholder="Preço pago" min="0" step="0.01" value="${ingredient ? ingredient.price : ''}">
+            <input type="number" class="ingredient-amount" placeholder="Quantidade comprada" min="0" step="0.001" value="${ingredient ? ingredient.amount : ''}">
+            <input type="text" class="ingredient-amount-unit" placeholder="Unidade da compra" value="${ingredient ? ingredient.amountUnit : ''}">
+            <button class="remove-btn" data-id="${ingredientId}">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        
+        ingredientList.appendChild(ingredientItem);
+        
+        // Adicionar evento ao botão de remover
+        const removeBtn = ingredientItem.querySelector('.remove-btn');
+        removeBtn.addEventListener('click', () => {
+            ingredientItem.remove();
+        });
+    }
+    
+    // Adicionar item de embalagem
+    function addPackagingItem(packaging = null) {
+        const packagingId = Date.now();
+        const packagingItem = document.createElement('div');
+        packagingItem.className = 'packaging-item';
+        packagingItem.dataset.id = packagingId;
+        
+        packagingItem.innerHTML = `
+            <input type="text" class="packaging-name" placeholder="Nome da embalagem" value="${packaging ? packaging.name : ''}">
+            <input type="number" class="packaging-quantity" placeholder="Quantidade por produto" min="0" step="0.001" value="${packaging ? packaging.quantity : ''}">
+            <input type="number" class="packaging-price" placeholder="Preço total" min="0" step="0.01" value="${packaging ? packaging.price : ''}">
+            <input type="number" class="packaging-amount" placeholder="Quantidade comprada" min="0" step="1" value="${packaging ? packaging.amount : ''}">
+            <button class="remove-btn" data-id="${packagingId}">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        
+        packagingList.appendChild(packagingItem);
+        
+        // Adicionar evento ao botão de remover
+        const removeBtn = packagingItem.querySelector('.remove-btn');
+        removeBtn.addEventListener('click', () => {
+            packagingItem.remove();
+        });
+    }
+    
+    // Calcular custo dos ingredientes
+    function calculateIngredientsCost() {
+        const ingredientItems = document.querySelectorAll('.ingredient-item');
+        currentProduct.ingredients = [];
+        currentProduct.additionalCosts = parseFloat(additionalCostsInput.value) || 0;
+        
+        ingredientItems.forEach(item => {
+            const name = item.querySelector('.ingredient-name').value.trim();
+            const quantity = parseFloat(item.querySelector('.ingredient-quantity').value) || 0;
+            const unit = item.querySelector('.ingredient-unit').value.trim();
+            const price = parseFloat(item.querySelector('.ingredient-price').value) || 0;
+            const amount = parseFloat(item.querySelector('.ingredient-amount').value) || 0;
+            const amountUnit = item.querySelector('.ingredient-amount-unit').value.trim();
+            
+            if (name && quantity > 0 && price > 0 && amount > 0) {
+                currentProduct.ingredients.push({
+                    name,
+                    quantity,
+                    unit,
+                    price,
+                    amount,
+                    amountUnit
+                });
+            }
+        });
+        
+        if (currentProduct.ingredients.length === 0) {
+            showToast('Adicione pelo menos um ingrediente válido', 'error');
+            return;
+        }
+        
+        showToast('Custo dos ingredientes calculado com sucesso!', 'success');
+        switchTab('packaging');
+    }
+    
+    // Calcular custo da embalagem
+    function calculatePackagingCost() {
+        const packagingItems = document.querySelectorAll('.packaging-item');
+        currentProduct.packaging = [];
+        
+        packagingItems.forEach(item => {
+            const name = item.querySelector('.packaging-name').value.trim();
+            const quantity = parseFloat(item.querySelector('.packaging-quantity').value) || 0;
+            const price = parseFloat(item.querySelector('.packaging-price').value) || 0;
+            const amount = parseFloat(item.querySelector('.packaging-amount').value) || 0;
+            
+            if (name && quantity > 0 && price > 0 && amount > 0) {
+                currentProduct.packaging.push({
+                    name,
+                    quantity,
+                    price,
+                    amount
+                });
+            }
+        });
+        
+        if (currentProduct.packaging.length === 0) {
+            showToast('Adicione pelo menos um item de embalagem válido', 'error');
+            return;
+        }
+        
+        showToast('Custo da embalagem calculado com sucesso!', 'success');
+        switchTab('ifood');
+    }
+    
+    // Calcular configurações do iFood
+    function calculateIfoodResults() {
+        currentProduct.ifoodFee = parseFloat(ifoodFeeInput.value) || 0;
+        currentProduct.deliveryFee = parseFloat(deliveryFeeInput.value) || 0;
+        currentProduct.salePrice = parseFloat(salePriceInput.value) || 0;
+        
+        if (currentProduct.salePrice <= 0) {
+            showToast('Insira um preço de venda válido', 'error');
+            return;
+        }
+        
+        showToast('Configurações do iFood salvas com sucesso!', 'success');
+        switchTab('results');
+    }
+    
+    // Calcular todos os resultados
+    function calculateAll() {
+        if (!currentProduct.name) {
+            showToast('Primeiro, configure as informações do produto', 'error');
+            switchTab('product');
+            return;
+        }
+        
+        if (currentProduct.ingredients.length === 0) {
+            showToast('Primeiro, configure os ingredientes', 'error');
+            switchTab('ingredients');
+            return;
+        }
+        
+        if (currentProduct.packaging.length === 0) {
+            showToast('Primeiro, configure a embalagem', 'error');
+            switchTab('packaging');
+            return;
+        }
+        
+        // Calcular custo total dos ingredientes
+        let ingredientsCost = 0;
+        currentProduct.ingredients.forEach(ing => {
+            const costPerUnit = ing.price / ing.amount;
+            const costInRecipe = costPerUnit * ing.quantity;
+            ingredientsCost += costInRecipe;
+        });
+        
+        // Calcular custo total da embalagem
+        let packagingCost = 0;
+        currentProduct.packaging.forEach(pack => {
+            const costPerUnit = pack.price / pack.amount;
+            const costInRecipe = costPerUnit * pack.quantity;
+            packagingCost += costInRecipe;
+        });
+        
+        // Custo total da receita
+        currentProduct.totalCost = ingredientsCost + packagingCost + (currentProduct.additionalCosts || 0);
+        
+        // Custo por unidade
+        currentProduct.unitCost = currentProduct.totalCost / currentProduct.yield;
+        
+        // Preço sugerido (3x o custo, padrão para alimentos)
+        currentProduct.suggestedPrice = currentProduct.unitCost * 3;
+        
+        // Preço no iFood (mesmo preço de venda)
+        currentProduct.ifoodPrice = currentProduct.salePrice;
+        
+        // Lucro por unidade (venda direta)
+        currentProduct.unitProfit = currentProduct.salePrice - currentProduct.unitCost;
+        
+        // Lucro por unidade (iFood)
+        const ifoodFeeAmount = (currentProduct.salePrice * currentProduct.ifoodFee / 100) + currentProduct.deliveryFee;
+        currentProduct.ifoodProfit = currentProduct.salePrice - currentProduct.unitCost - ifoodFeeAmount;
+        
+        // Margem de lucro
+        if (currentProduct.salePrice > 0) {
+            currentProduct.profitMargin = ((currentProduct.salePrice - currentProduct.unitCost) / currentProduct.salePrice * 100).toFixed(2);
+        } else {
+            currentProduct.profitMargin = 0;
+        }
+        
+        // Lucro total da receita
+        currentProduct.totalProfit = currentProduct.unitProfit * currentProduct.yield;
+        
+        // Atualizar a interface com os resultados
+        updateResultsUI();
+        
+        // Criar/atualizar o gráfico
+        createProfitChart();
+    }
+    
+    // Atualizar a UI com os resultados calculados
+    function updateResultsUI() {
+        document.getElementById('total-recipe-cost').textContent = formatCurrency(currentProduct.totalCost);
+        document.getElementById('unit-cost').textContent = formatCurrency(currentProduct.unitCost);
+        document.getElementById('suggested-price').textContent = formatCurrency(currentProduct.suggestedPrice);
+        document.getElementById('ifood-price').textContent = formatCurrency(currentProduct.ifoodPrice);
+        
+        const unitProfitElement = document.getElementById('unit-profit');
+        unitProfitElement.textContent = formatCurrency(currentProduct.unitProfit);
+        unitProfitElement.className = currentProduct.unitProfit >= 0 ? 'result-value profit' : 'result-value loss';
+        
+        const ifoodProfitElement = document.getElementById('ifood-profit');
+        ifoodProfitElement.textContent = formatCurrency(currentProduct.ifoodProfit);
+        ifoodProfitElement.className = currentProduct.ifoodProfit >= 0 ? 'result-value profit' : 'result-value loss';
+        
+        const profitMarginElement = document.getElementById('profit-margin');
+        profitMarginElement.textContent = `${currentProduct.profitMargin}%`;
+        profitMarginElement.className = currentProduct.profitMargin >= 0 ? 'result-value profit' : 'result-value loss';
+        
+        const totalProfitElement = document.getElementById('total-profit');
+        totalProfitElement.textContent = formatCurrency(currentProduct.totalProfit);
+        totalProfitElement.className = currentProduct.totalProfit >= 0 ? 'result-value profit' : 'result-value loss';
+    }
+    
+    // Criar gráfico de lucro
+    function createProfitChart() {
+        const ctx = document.getElementById('profitChart').getContext('2d');
+        
+        // Dados para o gráfico
+        const labels = ['Custo', 'Lucro Direto', 'Lucro iFood'];
+        const data = [
+            currentProduct.unitCost,
+            currentProduct.unitProfit,
+            currentProduct.ifoodProfit
+        ];
+        
+        const backgroundColors = [
+            'rgba(108, 117, 125, 0.7)', // Cinza para custo
+            'rgba(56, 176, 0, 0.7)',    // Verde para lucro direto
+            'rgba(67, 97, 238, 0.7)'     // Azul para lucro iFood
+        ];
+        
+        const borderColors = [
+            'rgba(108, 117, 125, 1)',
+            'rgba(56, 176, 0, 1)',
+            'rgba(67, 97, 238, 1)'
+        ];
+        
+        // Destruir o gráfico anterior se existir
+        if (profitChart) {
+            profitChart.destroy();
+        }
+        
+        // Criar novo gráfico
+        profitChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Valor (R$)',
+                    data: data,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Comparação de Custos e Lucros por Unidade',
+                        font: {
+                            size: 16
+                        }
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `R$ ${context.raw.toFixed(2)}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Valor (R$)'
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    // Salvar análise no histórico
+    function saveAnalysis() {
+        if (currentProduct.totalCost <= 0 || currentProduct.salePrice <= 0) {
+            showToast('Calcule os resultados antes de salvar', 'error');
+            return;
+        }
+        
+        currentProduct.createdAt = new Date().toISOString();
+        
+        // Adicionar ao histórico
+        history.unshift({...currentProduct});
+        
+        // Manter apenas os últimos 50 itens
+        if (history.length > 50) {
+            history = history.slice(0, 50);
+        }
+        
+        // Salvar no localStorage
+        localStorage.setItem('foodFinancesHistory', JSON.stringify(history));
+        
+        showToast('Análise salva no histórico com sucesso!', 'success');
+        loadHistory();
+    }
+    
+    // Carregar histórico
+    function loadHistory() {
+        historyTable.innerHTML = '';
+        
+        if (history.length === 0) {
+            const row = historyTable.insertRow();
+            const cell = row.insertCell();
+            cell.colSpan = 6;
+            cell.textContent = 'Nenhuma análise salva ainda';
+            cell.style.textAlign = 'center';
+            return;
+        }
+        
+        history.forEach(item => {
+            const row = historyTable.insertRow();
+            
+            // Nome do produto
+            const nameCell = row.insertCell();
+            nameCell.textContent = item.name || 'Sem nome';
+            
+            // Data
+            const dateCell = row.insertCell();
+            const date = new Date(item.createdAt);
+            dateCell.textContent = date.toLocaleDateString() + ' ' + date.toLocaleTimeString().substring(0, 5);
+            
+            // Custo unitário
+            const costCell = row.insertCell();
+            costCell.textContent = formatCurrency(item.unitCost);
+            
+            // Preço de venda
+            const priceCell = row.insertCell();
+            priceCell.textContent = formatCurrency(item.salePrice);
+            
+            // Lucro
+            const profitCell = row.insertCell();
+            profitCell.textContent = formatCurrency(item.unitProfit);
+            profitCell.className = item.unitProfit >= 0 ? 'profit' : 'loss';
+            
+            // Ações
+            const actionsCell = row.insertCell();
+            actionsCell.style.display = 'flex';
+            actionsCell.style.gap = '8px';
+            
+            const viewBtn = document.createElement('button');
+            viewBtn.className = 'info';
+            viewBtn.innerHTML = '<i class="fas fa-eye"></i>';
+            viewBtn.title = 'Visualizar';
+            viewBtn.addEventListener('click', () => viewAnalysis(item));
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'danger';
+            deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+            deleteBtn.title = 'Excluir';
+            deleteBtn.addEventListener('click', () => deleteAnalysis(item.createdAt));
+            
+            actionsCell.appendChild(viewBtn);
+            actionsCell.appendChild(deleteBtn);
+        });
+    }
+    
+    // Visualizar análise do histórico
+    function viewAnalysis(analysis) {
+        // Preencher todos os campos com os dados da análise
+        currentProduct = {...analysis};
+        
+        // Aba Produto
+        productNameInput.value = currentProduct.name;
+        productYieldInput.value = currentProduct.yield;
+        productDescriptionInput.value = currentProduct.description || '';
+        
+        // Aba Ingredientes
+        ingredientList.innerHTML = '';
+        currentProduct.ingredients.forEach(ing => {
+            addIngredientItem(ing);
+        });
+        additionalCostsInput.value = currentProduct.additionalCosts || 0;
+        
+        // Aba Embalagem
+        packagingList.innerHTML = '';
+        currentProduct.packaging.forEach(pack => {
+            addPackagingItem(pack);
+        });
+        
+        // Aba iFood
+        ifoodFeeInput.value = currentProduct.ifoodFee;
+        deliveryFeeInput.value = currentProduct.deliveryFee;
+        salePriceInput.value = currentProduct.salePrice;
+        
+        // Atualizar resultados
+        updateResultsUI();
+        createProfitChart();
+        
+        // Ir para aba de resultados
+        switchTab('results');
+        showToast('Análise carregada com sucesso!', 'success');
+    }
+    
+    // Excluir análise do histórico
+    function deleteAnalysis(createdAt) {
+        if (confirm('Tem certeza que deseja excluir esta análise?')) {
+            history = history.filter(item => item.createdAt !== createdAt);
+            localStorage.setItem('foodFinancesHistory', JSON.stringify(history));
+            loadHistory();
+            showToast('Análise excluída com sucesso!', 'success');
+        }
+    }
+    
+    // Limpar histórico
+    function clearHistory() {
+        if (confirm('Tem certeza que deseja limpar todo o histórico? Esta ação não pode ser desfeita.')) {
+            history = [];
+            localStorage.removeItem('foodFinancesHistory');
+            loadHistory();
+            showToast('Histórico limpo com sucesso!', 'success');
+        }
+    }
+    
+    // Exportar resultados para PDF
+    function printResults() {
+        showToast('Preparando relatório...', 'info');
+        
+        // Usaremos html2canvas + jsPDF para gerar o PDF
+        const { jsPDF } = window.jspdf;
+        const element = document.getElementById('results-container');
+        
+        html2canvas(element, {
+            scale: 2,
+            logging: false,
+            useCORS: true
+        }).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgWidth = 190;
+            const pageHeight = 277;
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 10;
+            
+            pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+            
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+            
+            pdf.save(`FoodFinances_${currentProduct.name}_${new Date().toISOString().slice(0,10)}.pdf`);
+            showToast('Relatório exportado com sucesso!', 'success');
+        }).catch(err => {
+            console.error('Erro ao gerar PDF:', err);
+            showToast('Erro ao exportar relatório', 'error');
+        });
+    }
+    
+    // Exportar gráfico para PDF
+    function printChart() {
+        showToast('Preparando gráfico...', 'info');
+        
+        const { jsPDF } = window.jspdf;
+        const canvas = document.getElementById('profitChart');
+        const imgData = canvas.toDataURL('image/png');
+        
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgWidth = 180;
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        
+        // Centralizar na página
+        const x = (pdf.internal.pageSize.getWidth() - imgWidth) / 2;
+        const y = 20;
+        
+        pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+        pdf.save(`FoodFinances_Grafico_${currentProduct.name}_${new Date().toISOString().slice(0,10)}.pdf`);
+        showToast('Gráfico exportado com sucesso!', 'success');
+    }
+    
+    // Mostrar notificação toast
+    function showToast(message, type = 'success') {
+        const toastIcon = toast.querySelector('i');
+        
+        // Definir ícone e cor com base no tipo
+        switch (type) {
+            case 'error':
+                toastIcon.className = 'fas fa-exclamation-circle';
+                toast.className = 'toast error';
+                break;
+            case 'warning':
+                toastIcon.className = 'fas fa-exclamation-triangle';
+                toast.className = 'toast warning';
+                break;
+            case 'info':
+                toastIcon.className = 'fas fa-info-circle';
+                toast.className = 'toast info';
+                break;
+            default:
+                toastIcon.className = 'fas fa-check-circle';
+                toast.className = 'toast success';
+        }
+        
+        toastMessage.textContent = message;
+        toast.classList.add('show');
+        
+        // Esconder automaticamente após 5 segundos
+        setTimeout(hideToast, 5000);
+    }
+    
+    // Esconder notificação toast
+    function hideToast() {
+        toast.classList.remove('show');
+    }
+    
+    // Formatar valor monetário
+    function formatCurrency(value) {
+        return 'R$ ' + parseFloat(value || 0).toFixed(2).replace('.', ',');
+    }
+});
+    </script>
+</body>
+</html>
