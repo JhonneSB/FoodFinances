@@ -599,11 +599,12 @@
             animation: fadeIn 0.4s ease-out forwards;
         }
 
-        /* Toast notifications */
+        /* Toast notifications - Mobile improvements */
         .toast {
             position: fixed;
             bottom: 15px;
             right: 15px;
+            left: 15px;
             background-color: var(--primary-color);
             color: white;
             padding: 12px 20px;
@@ -613,14 +614,14 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            transform: translateX(150%);
+            transform: translateY(100%);
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            max-width: calc(100% - 30px);
+            max-width: 100%;
         }
 
         .toast.show {
-            transform: translateX(0);
+            transform: translateY(0);
             opacity: 1;
         }
 
@@ -643,6 +644,7 @@
 
         .toast i {
             font-size: 1.3rem;
+            flex-shrink: 0;
         }
 
         .close-toast {
@@ -655,6 +657,7 @@
             margin-left: 10px;
             opacity: 0.8;
             transition: var(--transition);
+            flex-shrink: 0;
         }
 
         .close-toast:hover {
@@ -664,17 +667,24 @@
 
         .toast-content {
             flex: 1;
+            min-width: 0;
         }
 
         .toast-title {
             font-weight: 600;
             margin-bottom: 5px;
             font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .toast-message {
             font-size: 0.85rem;
             opacity: 0.9;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         /* Loading spinner */
@@ -735,7 +745,7 @@
             opacity: 1;
         }
 
-        /* Mobile Keyboard Done Button */
+        /* Mobile Keyboard Done Button - Improved */
         .mobile-keyboard-done {
             position: fixed;
             bottom: 0;
@@ -743,11 +753,14 @@
             right: 0;
             background: var(--primary-color);
             color: white;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
             z-index: 9999;
             cursor: pointer;
             display: none;
+            font-weight: 500;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            border-top: 1px solid rgba(255,255,255,0.2);
         }
 
         /* History table actions */
@@ -792,6 +805,88 @@
             
             .result-item {
                 padding: 10px;
+            }
+            
+            /* Improve toast for landscape */
+            .toast {
+                left: auto;
+                max-width: 60%;
+            }
+        }
+
+        /* Mobile-specific improvements */
+        @media (max-width: 767px) {
+            /* Better tab navigation */
+            .tabs {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 3px;
+                padding-bottom: 3px;
+            }
+            
+            .tab {
+                padding: 8px 3px;
+                font-size: 0.75rem;
+                justify-content: center;
+            }
+            
+            .tab i {
+                font-size: 0.9em;
+            }
+            
+            /* Better form inputs */
+            input, select {
+                padding: 10px 12px;
+                font-size: 0.95rem;
+            }
+            
+            /* Better buttons */
+            button {
+                padding: 10px 12px;
+                font-size: 0.95rem;
+            }
+            
+            /* Better results display */
+            .result-item {
+                padding: 12px;
+            }
+            
+            .result-item h3 {
+                font-size: 0.8rem;
+            }
+            
+            .result-value {
+                font-size: 1.1rem;
+            }
+            
+            /* Better chart container */
+            .chart-container {
+                height: 250px;
+                padding: 10px;
+            }
+            
+            /* Better toast for mobile */
+            .toast {
+                max-width: calc(100% - 30px);
+            }
+            
+            /* Hide some elements on mobile */
+            .print-btn button:not(:first-child) {
+                display: none;
+            }
+            
+            /* Better history table */
+            #history-table {
+                font-size: 0.85rem;
+            }
+            
+            #history-table th,
+            #history-table td {
+                padding: 8px 10px;
+            }
+            
+            .actions-cell button {
+                padding: 6px 8px;
+                font-size: 0.75rem;
             }
         }
 
@@ -855,6 +950,13 @@
                 height: 36px;
                 border-radius: 50%;
             }
+            
+            /* Restore toast position for desktop */
+            .toast {
+                left: auto;
+                right: 15px;
+                max-width: 350px;
+            }
         }
 
         @media (min-width: 992px) {
@@ -911,6 +1013,11 @@
 
             #history-table .actions-cell {
                 min-width: 160px;
+            }
+            
+            /* Show all print buttons on desktop */
+            .print-btn button {
+                display: inline-flex !important;
             }
         }
 
@@ -1213,22 +1320,31 @@
                 return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
             }
 
-            // Configurar teclado móvel
+            // Configurar teclado móvel melhorado
             function setupMobileKeyboard() {
                 if (!isMobileDevice()) return;
                 
                 document.querySelectorAll('input, select').forEach(input => {
                     input.addEventListener('focus', function() {
                         mobileKeyboardDone.style.display = 'block';
+                        // Scroll para o input
+                        setTimeout(() => {
+                            this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 300);
                     });
                     
                     input.addEventListener('blur', function() {
-                        mobileKeyboardDone.style.display = 'none';
+                        // Pequeno delay para garantir que não esconda antes do click no botão
+                        setTimeout(() => {
+                            mobileKeyboardDone.style.display = 'none';
+                        }, 200);
                     });
                 });
                 
                 mobileKeyboardDone.addEventListener('click', function() {
                     document.activeElement.blur();
+                    // Pequeno scroll para cima após fechar teclado
+                    window.scrollBy({ top: -100, behavior: 'smooth' });
                 });
             }
 
@@ -1301,6 +1417,13 @@
                 // Ações específicas por tab
                 if (tabId === 'results') calculateAll();
                 if (tabId === 'history') loadHistory();
+                
+                // Scroll para o topo da tab no mobile
+                if (isMobileDevice()) {
+                    setTimeout(() => {
+                        document.querySelector(`#${tabId}-tab`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                }
             }
 
             // Funções do produto
@@ -1343,6 +1466,11 @@
 
                 ingredientList.appendChild(ingredientItem);
                 ingredientItem.querySelector('.remove-btn').addEventListener('click', () => ingredientItem.remove());
+                
+                // Focar no novo campo nome
+                setTimeout(() => {
+                    ingredientItem.querySelector('.ingredient-name').focus();
+                }, 100);
             }
 
             // Funções de embalagem
@@ -1363,6 +1491,11 @@
 
                 packagingList.appendChild(packagingItem);
                 packagingItem.querySelector('.remove-btn').addEventListener('click', () => packagingItem.remove());
+                
+                // Focar no novo campo nome
+                setTimeout(() => {
+                    packagingItem.querySelector('.packaging-name').focus();
+                }, 100);
             }
 
             // Funções de cálculo
@@ -1656,124 +1789,151 @@
                 }
             }
 
-            // Funções de exportação
+            // Funções de exportação melhoradas para mobile
             function printResults() {
                 showToast('Preparando relatório de resultados...', 'info');
-                const element = document.getElementById('results-container');
-
-                html2canvas(element, { scale: 2 }).then(canvas => {
+                
+                // Criar um elemento temporário para capturar o conteúdo
+                const tempElement = document.createElement('div');
+                tempElement.style.position = 'absolute';
+                tempElement.style.left = '-9999px';
+                tempElement.style.width = isMobileDevice() ? '95%' : '800px';
+                tempElement.style.padding = '20px';
+                tempElement.style.backgroundColor = 'white';
+                
+                // Adicionar cabeçalho
+                tempElement.innerHTML = `
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <h1 style="color: #4361ee; margin-bottom: 5px; font-size: ${isMobileDevice() ? '1.5rem' : '2rem'};">FoodFinances</h1>
+                        <h2 style="color: #4361ee; margin-bottom: 15px; font-size: ${isMobileDevice() ? '1.2rem' : '1.5rem'};">Relatório de Resultados</h2>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 10px; font-size: ${isMobileDevice() ? '1rem' : '1.2rem'};">Informações do Produto</h3>
+                        <p style="margin-bottom: 5px;"><strong>Nome:</strong> ${currentProduct.name || 'Não informado'}</p>
+                        <p style="margin-bottom: 5px;"><strong>Rendimento:</strong> ${currentProduct.yield} unidades</p>
+                        <p><strong>Data:</strong> ${new Date().toLocaleDateString()}</p>
+                    </div>
+                `;
+                
+                // Adicionar resultados
+                const resultsContainer = document.getElementById('results-container').cloneNode(true);
+                resultsContainer.style.display = 'grid';
+                resultsContainer.style.gridTemplateColumns = isMobileDevice() ? '1fr' : '1fr 1fr';
+                resultsContainer.style.gap = '10px';
+                resultsContainer.style.marginBottom = '20px';
+                
+                // Remover hover effects para impressão
+                Array.from(resultsContainer.children).forEach(item => {
+                    item.style.transform = 'none';
+                    item.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+                });
+                
+                tempElement.appendChild(resultsContainer);
+                
+                // Adicionar rodapé
+                tempElement.innerHTML += `
+                    <div style="text-align: center; color: #6c757d; font-size: 0.8rem; margin-top: 20px; border-top: 1px solid #e9ecef; padding-top: 10px;">
+                        <p>FoodFinances - Sistema de Gestão Financeira para Microempreendedores</p>
+                        <p>Relatório gerado em ${new Date().toLocaleString()}</p>
+                    </div>
+                `;
+                
+                document.body.appendChild(tempElement);
+                
+                html2canvas(tempElement, { 
+                    scale: isMobileDevice() ? 1 : 2,
+                    scrollX: 0,
+                    scrollY: 0,
+                    windowWidth: tempElement.scrollWidth,
+                    windowHeight: tempElement.scrollHeight
+                }).then(canvas => {
                     const { jsPDF } = window.jspdf;
-                    const pdf = new jsPDF();
-                    let yPosition = 20;
-
-                    // Cabeçalho
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.setTextColor(67, 97, 238); // Cor primária
-                    pdf.setFontSize(20);
-                    pdf.text('FoodFinances - Relatório de Resultados', 105, yPosition, { align: 'center' });
-                    yPosition += 15;
-
-                    // Informações do produto
-                    pdf.setFontSize(14);
-                    pdf.setTextColor(0, 0, 0);
-                    pdf.text(`Produto: ${currentProduct.name || 'Não informado'}`, 20, yPosition);
-                    yPosition += 10;
-                    pdf.text(`Data: ${new Date().toLocaleDateString()}`, 20, yPosition);
-                    yPosition += 15;
-
-                    // Imagem dos resultados
+                    const pdf = new jsPDF({
+                        orientation: isMobileDevice() ? 'portrait' : 'landscape',
+                        unit: 'mm'
+                    });
+                    
                     const imgData = canvas.toDataURL('image/png');
-                    const imgWidth = 170;
-                    const imgHeight = canvas.height * imgWidth / canvas.width;
-
-                    // Verificar se cabe na página
-                    if (yPosition + imgHeight > 270) {
-                        pdf.addPage();
-                        yPosition = 20;
-                    }
-
-                    pdf.addImage(imgData, 'PNG', 20, yPosition, imgWidth, imgHeight);
-                    yPosition += imgHeight + 10;
-
-                    // Rodapé
-                    pdf.setFontSize(10);
-                    pdf.setTextColor(100, 100, 100);
-                    pdf.text('FoodFinances - Sistema de Gestão Financeira para Microempreendedores', 105, 287, { align: 'center' });
-                    pdf.text(`Relatório gerado em ${new Date().toLocaleString()}`, 105, 292, { align: 'center' });
-
+                    const imgWidth = pdf.internal.pageSize.getWidth() - 20;
+                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                    
+                    pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
                     pdf.save(`FoodFinances_Resultados_${currentProduct.name}_${new Date().toISOString().slice(0, 10)}.pdf`);
-                    showToast('Relatório de resultados exportado com sucesso!', 'success');
+                    
+                    document.body.removeChild(tempElement);
+                    showToast('Relatório exportado com sucesso!', 'success');
                 }).catch(err => {
                     console.error('Erro ao gerar PDF:', err);
+                    document.body.removeChild(tempElement);
                     showToast('Erro ao exportar relatório', 'error');
                 });
             }
 
             function printChart() {
                 showToast('Preparando exportação do gráfico...', 'info');
+                
                 const canvas = document.getElementById('profitChart');
                 const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF();
-                let yPosition = 20;
-
-                // Cabeçalho
+                const pdf = new jsPDF({
+                    orientation: isMobileDevice() ? 'portrait' : 'landscape',
+                    unit: 'mm'
+                });
+                
+                // Adicionar cabeçalho
                 pdf.setFont('helvetica', 'bold');
-                pdf.setTextColor(67, 97, 238); // Cor primária
-                pdf.setFontSize(20);
-                pdf.text('FoodFinances - Análise Gráfica', 105, yPosition, { align: 'center' });
-                yPosition += 15;
-
-                // Informações do produto
-                pdf.setFontSize(14);
+                pdf.setTextColor(67, 97, 238);
+                pdf.setFontSize(isMobileDevice() ? 16 : 20);
+                pdf.text('FoodFinances - Análise Gráfica', pdf.internal.pageSize.getWidth() / 2, 15, { align: 'center' });
+                
+                pdf.setFontSize(isMobileDevice() ? 12 : 14);
                 pdf.setTextColor(0, 0, 0);
-                pdf.text(`Produto: ${currentProduct.name || 'Não informado'}`, 20, yPosition);
-                yPosition += 10;
-                pdf.text(`Data: ${new Date().toLocaleDateString()}`, 20, yPosition);
-                yPosition += 15;
-
+                pdf.text(`Produto: ${currentProduct.name || 'Não informado'}`, 15, 25);
+                pdf.text(`Data: ${new Date().toLocaleDateString()}`, 15, 30);
+                
                 // Adicionar gráfico
                 const imgData = canvas.toDataURL('image/png');
-                const imgWidth = 170;
-                const imgHeight = canvas.height * imgWidth / canvas.width;
-
-                // Verificar se cabe na página
-                if (yPosition + imgHeight > 270) {
+                const imgWidth = pdf.internal.pageSize.getWidth() - 30;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                // Verificar espaço disponível
+                let yPosition = 35;
+                if (yPosition + imgHeight > pdf.internal.pageSize.getHeight() - 20) {
                     pdf.addPage();
                     yPosition = 20;
                 }
-
-                pdf.addImage(imgData, 'PNG', 20, yPosition, imgWidth, imgHeight);
-                yPosition += imgHeight + 10;
-
-                // Legenda do gráfico
-                pdf.setFontSize(12);
-                pdf.setTextColor(0, 0, 0);
-                pdf.text('Legenda:', 20, yPosition);
-                yPosition += 10;
                 
-                // Adicionar legenda colorida
+                pdf.addImage(imgData, 'PNG', 15, yPosition, imgWidth, imgHeight);
+                yPosition += imgHeight + 5;
+                
+                // Adicionar legenda
+                pdf.setFontSize(isMobileDevice() ? 10 : 12);
+                pdf.text('Legenda:', 15, yPosition);
+                yPosition += 5;
+                
                 const legendItems = [
                     { color: [108, 117, 125], text: 'Custo Unitário' },
                     { color: [56, 176, 0], text: 'Lucro Venda Direta' },
                     { color: [67, 97, 238], text: 'Lucro iFood' }
                 ];
                 
-                legendItems.forEach((item, index) => {
+                legendItems.forEach(item => {
                     // Caixa de cor
                     pdf.setFillColor(item.color[0], item.color[1], item.color[2]);
-                    pdf.rect(20, yPosition - 3, 10, 10, 'F');
+                    pdf.rect(15, yPosition, 5, 5, 'F');
                     
                     // Texto da legenda
-                    pdf.text(item.text, 35, yPosition + 3);
-                    yPosition += 15;
+                    pdf.text(item.text, 22, yPosition + 4);
+                    yPosition += 8;
                 });
-
+                
                 // Rodapé
                 pdf.setFontSize(10);
                 pdf.setTextColor(100, 100, 100);
-                pdf.text('FoodFinances - Sistema de Gestão Financeira para Microempreendedores', 105, 287, { align: 'center' });
-                pdf.text(`Relatório gerado em ${new Date().toLocaleString()}`, 105, 292, { align: 'center' });
-
+                pdf.text('FoodFinances - Sistema de Gestão Financeira para Microempreendedores', 
+                        pdf.internal.pageSize.getWidth() / 2, pdf.internal.pageSize.getHeight() - 10, 
+                        { align: 'center' });
+                
                 pdf.save(`FoodFinances_Grafico_${currentProduct.name}_${new Date().toISOString().slice(0, 10)}.pdf`);
                 showToast('Gráfico exportado com sucesso!', 'success');
             }
@@ -1785,62 +1945,62 @@
                 const tempElement = document.createElement('div');
                 tempElement.style.position = 'absolute';
                 tempElement.style.left = '-9999px';
-                tempElement.style.width = '800px';
+                tempElement.style.width = isMobileDevice() ? '95%' : '800px';
                 tempElement.style.padding = '20px';
                 tempElement.style.backgroundColor = 'white';
                 
                 // Adicionar cabeçalho
                 tempElement.innerHTML = `
-                    <div style="text-align: center; margin-bottom: 30px;">
-                        <h1 style="color: #4361ee; margin-bottom: 10px;">FoodFinances</h1>
-                        <h2 style="color: #4361ee; margin-bottom: 20px;">Relatório Completo de Análise</h2>
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <h1 style="color: #4361ee; margin-bottom: 5px; font-size: ${isMobileDevice() ? '1.5rem' : '2rem'};">FoodFinances</h1>
+                        <h2 style="color: #4361ee; margin-bottom: 15px; font-size: ${isMobileDevice() ? '1.2rem' : '1.5rem'};">Relatório Completo de Análise</h2>
                     </div>
                     
-                    <div style="margin-bottom: 30px;">
-                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 15px;">Informações do Produto</h3>
-                        <p><strong>Nome:</strong> ${currentProduct.name || 'Não informado'}</p>
-                        <p><strong>Descrição:</strong> ${currentProduct.description || 'Não informada'}</p>
-                        <p><strong>Rendimento:</strong> ${currentProduct.yield} unidades</p>
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 10px; font-size: ${isMobileDevice() ? '1rem' : '1.2rem'};">Informações do Produto</h3>
+                        <p style="margin-bottom: 5px;"><strong>Nome:</strong> ${currentProduct.name || 'Não informado'}</p>
+                        <p style="margin-bottom: 5px;"><strong>Descrição:</strong> ${currentProduct.description || 'Não informada'}</p>
+                        <p style="margin-bottom: 5px;"><strong>Rendimento:</strong> ${currentProduct.yield} unidades</p>
                         <p><strong>Data da análise:</strong> ${new Date().toLocaleDateString()}</p>
                     </div>
                 `;
                 
                 // Adicionar resultados
                 tempElement.innerHTML += `
-                    <div style="margin-bottom: 30px;">
-                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 15px;">Resultados Financeiros</h3>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
-                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 10px; font-size: ${isMobileDevice() ? '1rem' : '1.2rem'};">Resultados Financeiros</h3>
+                        <div style="display: grid; grid-template-columns: ${isMobileDevice() ? '1fr' : '1fr 1fr'}; gap: 10px;">
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
                                 <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Custo Total da Receita</p>
-                                <p style="font-weight: bold; font-size: 1.2rem;">${formatCurrency(currentProduct.totalCost)}</p>
+                                <p style="font-weight: bold; font-size: 1.1rem;">${formatCurrency(currentProduct.totalCost)}</p>
                             </div>
-                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
                                 <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Custo por Unidade</p>
-                                <p style="font-weight: bold; font-size: 1.2rem;">${formatCurrency(currentProduct.unitCost)}</p>
+                                <p style="font-weight: bold; font-size: 1.1rem;">${formatCurrency(currentProduct.unitCost)}</p>
                             </div>
-                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
                                 <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Preço de Venda Sugerido</p>
-                                <p style="font-weight: bold; font-size: 1.2rem;">${formatCurrency(currentProduct.suggestedPrice)}</p>
+                                <p style="font-weight: bold; font-size: 1.1rem;">${formatCurrency(currentProduct.suggestedPrice)}</p>
                             </div>
-                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
                                 <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Preço de Venda no iFood</p>
-                                <p style="font-weight: bold; font-size: 1.2rem;">${formatCurrency(currentProduct.ifoodPrice)}</p>
+                                <p style="font-weight: bold; font-size: 1.1rem;">${formatCurrency(currentProduct.ifoodPrice)}</p>
                             </div>
-                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
                                 <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Lucro por Unidade (Venda Direta)</p>
-                                <p style="font-weight: bold; font-size: 1.2rem; color: ${currentProduct.unitProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.unitProfit)}</p>
+                                <p style="font-weight: bold; font-size: 1.1rem; color: ${currentProduct.unitProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.unitProfit)}</p>
                             </div>
-                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
                                 <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Lucro por Unidade (iFood)</p>
-                                <p style="font-weight: bold; font-size: 1.2rem; color: ${currentProduct.ifoodProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.ifoodProfit)}</p>
+                                <p style="font-weight: bold; font-size: 1.1rem; color: ${currentProduct.ifoodProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.ifoodProfit)}</p>
                             </div>
-                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
                                 <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Margem de Lucro</p>
-                                <p style="font-weight: bold; font-size: 1.2rem; color: ${currentProduct.profitMargin >= 0 ? '#38b000' : '#f72585'}">${currentProduct.profitMargin}%</p>
+                                <p style="font-weight: bold; font-size: 1.1rem; color: ${currentProduct.profitMargin >= 0 ? '#38b000' : '#f72585'}">${currentProduct.profitMargin}%</p>
                             </div>
-                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
                                 <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Lucro Total da Receita</p>
-                                <p style="font-weight: bold; font-size: 1.2rem; color: ${currentProduct.totalProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.totalProfit)}</p>
+                                <p style="font-weight: bold; font-size: 1.1rem; color: ${currentProduct.totalProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.totalProfit)}</p>
                             </div>
                         </div>
                     </div>
@@ -1850,15 +2010,29 @@
                 const chartCanvas = document.getElementById('profitChart');
                 const chartImg = chartCanvas.toDataURL('image/png');
                 tempElement.innerHTML += `
-                    <div style="margin-bottom: 30px;">
-                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 15px;">Análise Gráfica</h3>
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 10px; font-size: ${isMobileDevice() ? '1rem' : '1.2rem'};">Análise Gráfica</h3>
                         <img src="${chartImg}" style="width: 100%; height: auto; border-radius: 6px;">
+                        <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 5px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 15px; height: 15px; background-color: #6c757d; border-radius: 3px;"></div>
+                                <span style="font-size: 0.9rem;">Custo Unitário</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 15px; height: 15px; background-color: #38b000; border-radius: 3px;"></div>
+                                <span style="font-size: 0.9rem;">Lucro Venda Direta</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 15px; height: 15px; background-color: #4361ee; border-radius: 3px;"></div>
+                                <span style="font-size: 0.9rem;">Lucro iFood</span>
+                            </div>
+                        </div>
                     </div>
                 `;
                 
                 // Adicionar rodapé
                 tempElement.innerHTML += `
-                    <div style="text-align: center; color: #6c757d; font-size: 0.8rem; margin-top: 30px; border-top: 1px solid #e9ecef; padding-top: 15px;">
+                    <div style="text-align: center; color: #6c757d; font-size: 0.8rem; margin-top: 20px; border-top: 1px solid #e9ecef; padding-top: 10px;">
                         <p>FoodFinances - Sistema de Gestão Financeira para Microempreendedores</p>
                         <p>Relatório gerado em ${new Date().toLocaleString()}</p>
                     </div>
@@ -1866,14 +2040,34 @@
                 
                 document.body.appendChild(tempElement);
                 
-                html2canvas(tempElement, { scale: 2 }).then(canvas => {
+                html2canvas(tempElement, { 
+                    scale: isMobileDevice() ? 1 : 2,
+                    scrollX: 0,
+                    scrollY: 0,
+                    windowWidth: tempElement.scrollWidth,
+                    windowHeight: tempElement.scrollHeight
+                }).then(canvas => {
                     const { jsPDF } = window.jspdf;
-                    const pdf = new jsPDF('p', 'mm', 'a4');
-                    const imgData = canvas.toDataURL('image/png');
-                    const imgWidth = 190;
-                    const imgHeight = canvas.height * imgWidth / canvas.width;
+                    const pdf = new jsPDF({
+                        orientation: isMobileDevice() ? 'portrait' : 'landscape',
+                        unit: 'mm'
+                    });
                     
-                    pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+                    const imgData = canvas.toDataURL('image/png');
+                    const imgWidth = pdf.internal.pageSize.getWidth() - 20;
+                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                    
+                    // Verificar se precisa de página adicional
+                    if (imgHeight > pdf.internal.pageSize.getHeight() - 20) {
+                        const ratio = (pdf.internal.pageSize.getHeight() - 30) / imgHeight;
+                        pdf.addImage(imgData, 'PNG', 10, 10, imgWidth * ratio, imgHeight * ratio);
+                        pdf.addPage();
+                        pdf.addImage(imgData, 'PNG', 10, 10, imgWidth * (1 - ratio), imgHeight * (1 - ratio), 
+                                     0, imgHeight * ratio, imgWidth, imgHeight, 'FAST');
+                    } else {
+                        pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+                    }
+                    
                     pdf.save(`FoodFinances_Relatorio_Completo_${currentProduct.name}_${new Date().toISOString().slice(0, 10)}.pdf`);
                     
                     document.body.removeChild(tempElement);
@@ -1897,8 +2091,14 @@
                 toast.querySelector('i').className = `fas ${icons[type]}`;
                 toast.className = `toast ${type}`;
                 toastMessage.textContent = message;
+                
+                // Atualizar título baseado no tipo
+                const toastTitle = toast.querySelector('.toast-title');
+                toastTitle.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+                
                 toast.classList.add('show');
 
+                // Auto-esconder após 5 segundos
                 setTimeout(hideToast, 5000);
             }
 
