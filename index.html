@@ -47,6 +47,7 @@
             display: flex;
             flex-direction: column;
             touch-action: manipulation;
+            -webkit-text-size-adjust: 100%;
         }
 
         .container {
@@ -60,10 +61,10 @@
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: var(--text-light);
-            padding: 20px 0;
+            padding: 15px 0;
             text-align: center;
             box-shadow: var(--shadow-md);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             position: relative;
             overflow: hidden;
         }
@@ -81,8 +82,8 @@
         }
 
         h1 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
             font-weight: 700;
             position: relative;
             display: inline-block;
@@ -94,14 +95,14 @@
             bottom: -5px;
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
+            width: 50px;
             height: 3px;
             background-color: var(--accent-color);
             border-radius: 3px;
         }
 
         .subtitle {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             opacity: 0.9;
             font-weight: 300;
             max-width: 700px;
@@ -113,8 +114,8 @@
             background-color: white;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow-sm);
-            padding: 15px;
-            margin-bottom: 20px;
+            padding: 12px;
+            margin-bottom: 15px;
             transition: var(--transition);
             border: 1px solid var(--light-gray);
         }
@@ -126,48 +127,48 @@
 
         .card-title {
             color: var(--primary-color);
-            margin-bottom: 15px;
-            padding-bottom: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
             border-bottom: 2px solid var(--light-gray);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .card-title i {
-            font-size: 1.1em;
+            font-size: 1em;
             color: var(--accent-color);
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             position: relative;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 500;
             color: var(--dark-color);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .form-group small {
             display: block;
-            margin-top: 5px;
+            margin-top: 4px;
             color: var(--gray-color);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
 
         input,
         select {
             width: 100%;
-            padding: 12px 15px;
+            padding: 10px 12px;
             border: 1px solid var(--light-gray);
             border-radius: var(--border-radius-sm);
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: var(--transition);
             background-color: white;
             -webkit-appearance: none;
@@ -193,16 +194,16 @@
             background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 12px 15px;
+            padding: 10px 12px;
             border-radius: var(--border-radius-sm);
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 500;
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             width: 100%;
         }
 
@@ -241,28 +242,29 @@
         .btn-group {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 8px;
+            margin-top: 15px;
         }
 
         .btn-group button {
             flex: 1 1 auto;
-            min-width: 120px;
+            min-width: 100px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 15px;
             background-color: white;
             border-radius: var(--border-radius-sm);
             overflow: hidden;
             box-shadow: var(--shadow-sm);
+            font-size: 0.85rem;
         }
 
         th,
         td {
-            padding: 12px 15px;
+            padding: 8px 10px;
             text-align: left;
             border-bottom: 1px solid var(--light-gray);
         }
@@ -272,7 +274,7 @@
             color: white;
             font-weight: 500;
             text-transform: uppercase;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             letter-spacing: 0.5px;
         }
 
@@ -286,9 +288,9 @@
 
         .badge {
             display: inline-block;
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -315,14 +317,14 @@
         }
 
         .results {
-            margin-top: 20px;
+            margin-top: 15px;
             display: grid;
             grid-template-columns: 1fr;
-            gap: 15px;
+            gap: 10px;
         }
 
         .result-item {
-            padding: 15px;
+            padding: 12px;
             background-color: white;
             border-radius: var(--border-radius-sm);
             box-shadow: var(--shadow-sm);
@@ -337,7 +339,7 @@
 
         .result-item h3 {
             color: var(--gray-color);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 500;
             margin-bottom: 5px;
             text-transform: uppercase;
@@ -346,7 +348,7 @@
 
         .result-value {
             font-weight: 700;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -365,10 +367,10 @@
         }
 
         .chart-container {
-            height: 300px;
-            margin-top: 20px;
+            height: 250px;
+            margin-top: 15px;
             background-color: white;
-            padding: 15px;
+            padding: 12px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow-sm);
         }
@@ -380,16 +382,16 @@
         .tabs {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-bottom: 1px solid var(--light-gray);
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            gap: 5px;
-            padding-bottom: 5px;
+            gap: 3px;
+            padding-bottom: 3px;
         }
 
         .tab {
-            padding: 10px 5px;
+            padding: 8px 5px;
             cursor: pointer;
             font-weight: 500;
             color: var(--gray-color);
@@ -401,7 +403,7 @@
             gap: 5px;
             white-space: nowrap;
             min-width: max-content;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             justify-content: center;
         }
 
@@ -419,7 +421,7 @@
         }
 
         .tab i {
-            font-size: 1em;
+            font-size: 0.9em;
             color: var(--gray-color);
         }
 
@@ -434,20 +436,20 @@
 
         .ingredient-list,
         .packaging-list {
-            margin-top: 15px;
+            margin-top: 12px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .ingredient-item,
         .packaging-item {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 10px;
+            gap: 8px;
             align-items: center;
             background-color: white;
-            padding: 12px;
+            padding: 10px;
             border-radius: var(--border-radius-sm);
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
@@ -463,7 +465,7 @@
             color: white;
             border: none;
             width: 100%;
-            height: 40px;
+            height: 36px;
             border-radius: var(--border-radius-sm);
             display: flex;
             align-items: center;
@@ -481,14 +483,14 @@
             background-color: var(--primary-color);
             color: white;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 8px;
             transition: var(--transition);
             align-self: flex-start;
         }
@@ -500,11 +502,12 @@
 
         footer {
             text-align: center;
-            padding: 20px 10px;
-            margin-top: 30px;
+            padding: 15px 10px;
+            margin-top: 20px;
             background-color: var(--dark-color);
             color: var(--text-light);
             border-radius: var(--border-radius) var(--border-radius) 0 0;
+            font-size: 0.85rem;
         }
 
         footer .container {
@@ -529,24 +532,25 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 8px;
-            margin: 15px 0;
+            gap: 6px;
+            margin: 12px 0;
         }
 
         .footer-links a {
             color: var(--light-gray);
+            font-size: 0.8rem;
         }
 
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin: 15px 0;
+            gap: 8px;
+            margin: 12px 0;
         }
 
         .social-links a {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background-color: rgba(255, 255, 255, 0.1);
             display: flex;
@@ -561,7 +565,7 @@
         }
 
         .print-btn {
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         /* Animations */
@@ -602,18 +606,18 @@
         /* Toast notifications - Mobile improvements */
         .toast {
             position: fixed;
-            bottom: 15px;
-            right: 15px;
-            left: 15px;
+            bottom: 10px;
+            right: 10px;
+            left: 10px;
             background-color: var(--primary-color);
             color: white;
-            padding: 12px 20px;
+            padding: 10px 15px;
             border-radius: var(--border-radius-sm);
             box-shadow: var(--shadow-lg);
             z-index: 1000;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             transform: translateY(100%);
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -643,7 +647,7 @@
         }
 
         .toast i {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             flex-shrink: 0;
         }
 
@@ -652,9 +656,9 @@
             border: none;
             color: inherit;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1rem;
             padding: 0;
-            margin-left: 10px;
+            margin-left: 8px;
             opacity: 0.8;
             transition: var(--transition);
             flex-shrink: 0;
@@ -672,15 +676,15 @@
 
         .toast-title {
             font-weight: 600;
-            margin-bottom: 5px;
-            font-size: 0.95rem;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         .toast-message {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             opacity: 0.9;
             white-space: nowrap;
             overflow: hidden;
@@ -690,8 +694,8 @@
         /* Loading spinner */
         .spinner {
             display: inline-block;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             border-top-color: white;
@@ -712,12 +716,12 @@
 
         .tooltip .tooltip-text {
             visibility: hidden;
-            width: 180px;
+            width: 150px;
             background-color: var(--dark-color);
             color: white;
             text-align: center;
             border-radius: var(--border-radius-sm);
-            padding: 8px;
+            padding: 6px;
             position: absolute;
             z-index: 1;
             bottom: 125%;
@@ -725,7 +729,7 @@
             transform: translateX(-50%);
             opacity: 0;
             transition: opacity 0.3s;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: normal;
         }
 
@@ -753,7 +757,7 @@
             right: 0;
             background: var(--primary-color);
             color: white;
-            padding: 12px;
+            padding: 10px;
             text-align: center;
             z-index: 9999;
             cursor: pointer;
@@ -761,50 +765,52 @@
             font-weight: 500;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
             border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.95rem;
         }
 
         /* History table actions */
         .actions-cell {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
         }
 
         .actions-cell button {
             width: auto;
-            padding: 8px 12px;
-            font-size: 0.85rem;
+            padding: 6px 8px;
+            font-size: 0.75rem;
+            min-width: 30px;
         }
 
         /* Landscape orientation adjustments */
         @media (orientation: landscape) and (max-height: 500px) {
             header {
-                padding: 15px 0;
+                padding: 10px 0;
             }
             
             .container {
-                padding: 10px;
+                padding: 8px;
             }
             
             .card {
-                padding: 12px;
-                margin-bottom: 15px;
+                padding: 10px;
+                margin-bottom: 10px;
             }
             
             .chart-container {
-                height: 250px;
+                height: 200px;
             }
             
             .form-group {
-                margin-bottom: 12px;
+                margin-bottom: 10px;
             }
             
             .btn-group {
-                margin-top: 15px;
+                margin-top: 12px;
             }
             
             .result-item {
-                padding: 10px;
+                padding: 8px;
             }
             
             /* Improve toast for landscape */
@@ -824,89 +830,165 @@
             }
             
             .tab {
-                padding: 8px 3px;
-                font-size: 0.75rem;
+                padding: 6px 3px;
+                font-size: 0.7rem;
                 justify-content: center;
             }
             
             .tab i {
-                font-size: 0.9em;
+                font-size: 0.8em;
             }
             
             /* Better form inputs */
             input, select {
-                padding: 10px 12px;
-                font-size: 0.95rem;
+                padding: 8px 10px;
+                font-size: 0.9rem;
             }
             
             /* Better buttons */
             button {
-                padding: 10px 12px;
-                font-size: 0.95rem;
+                padding: 8px 10px;
+                font-size: 0.9rem;
             }
             
             /* Better results display */
             .result-item {
-                padding: 12px;
+                padding: 10px;
             }
             
             .result-item h3 {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
             }
             
             .result-value {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
             
             /* Better chart container */
             .chart-container {
-                height: 250px;
-                padding: 10px;
+                height: 220px;
+                padding: 8px;
             }
             
             /* Better toast for mobile */
             .toast {
-                max-width: calc(100% - 30px);
+                max-width: calc(100% - 20px);
+                font-size: 0.9rem;
             }
             
-            /* Hide some elements on mobile */
-            .print-btn button:not(:first-child) {
-                display: none;
+            /* Print buttons for mobile */
+            .print-btn {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .print-btn button {
+                width: 100%;
+                margin: 0;
             }
             
             /* Better history table */
             #history-table {
-                font-size: 0.85rem;
+                font-size: 0.8rem;
             }
             
             #history-table th,
             #history-table td {
-                padding: 8px 10px;
+                padding: 6px 8px;
+                font-size: 0.75rem;
             }
             
             .actions-cell button {
-                padding: 6px 8px;
+                padding: 4px 6px;
+                font-size: 0.7rem;
+            }
+            
+            /* Adjust ingredient and packaging items for mobile */
+            .ingredient-item, .packaging-item {
+                grid-template-columns: 1fr;
+                gap: 6px;
+                padding: 8px;
+            }
+            
+            /* Adjust card titles */
+            .card-title {
+                font-size: 1rem;
+            }
+            
+            /* Adjust footer */
+            footer {
+                padding: 12px 8px;
+                font-size: 0.8rem;
+            }
+            
+            .footer-links a {
                 font-size: 0.75rem;
+            }
+            
+            .social-links a {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Tablet and larger mobile improvements */
+        @media (min-width: 480px) and (max-width: 767px) {
+            .tabs {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .tab {
+                font-size: 0.75rem;
+                padding: 8px 4px;
+            }
+            
+            .results {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .ingredient-item {
+                grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            }
+            
+            .packaging-item {
+                grid-template-columns: 2fr 1fr 1fr auto;
+            }
+            
+            .remove-btn {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+            }
+            
+            .print-btn {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .print-btn button {
+                flex: 1 1 calc(50% - 4px);
             }
         }
 
         /* Larger screens adjustments */
         @media (min-width: 768px) {
             h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
 
             .subtitle {
-                font-size: 1rem;
+                font-size: 0.95rem;
             }
 
             .card {
-                padding: 20px;
-                margin-bottom: 25px;
+                padding: 15px;
+                margin-bottom: 20px;
             }
 
             .card-title {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
             }
 
             .results {
@@ -915,17 +997,19 @@
 
             .tabs {
                 grid-template-columns: repeat(6, 1fr);
+                gap: 5px;
+                padding-bottom: 5px;
             }
 
             .tab {
-                padding: 12px 10px;
-                font-size: 0.9rem;
-                gap: 8px;
+                padding: 10px 5px;
+                font-size: 0.85rem;
+                gap: 6px;
             }
 
             .btn-group {
                 flex-direction: row;
-                gap: 12px;
+                gap: 10px;
             }
 
             button {
@@ -934,7 +1018,7 @@
 
             .footer-links {
                 flex-direction: row;
-                gap: 20px;
+                gap: 15px;
             }
 
             .ingredient-item {
@@ -961,29 +1045,30 @@
 
         @media (min-width: 992px) {
             h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
 
             .subtitle {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
 
             .card-title {
-                font-size: 1.4rem;
+                font-size: 1.3rem;
             }
 
             .results {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             }
 
             .result-value {
-                font-size: 1.4rem;
+                font-size: 1.3rem;
             }
 
             /* History table adjustments for desktop */
             #history-table {
                 display: table;
                 width: 100%;
+                font-size: 0.9rem;
             }
 
             #history-table th,
@@ -992,6 +1077,7 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 max-width: 200px;
+                padding: 10px 12px;
             }
 
             #history-table .product-cell {
@@ -1018,6 +1104,7 @@
             /* Show all print buttons on desktop */
             .print-btn button {
                 display: inline-flex !important;
+                flex: 1 1 auto;
             }
         }
 
@@ -1657,7 +1744,7 @@
                             title: {
                                 display: true,
                                 text: 'Comparação de Custos e Lucros por Unidade',
-                                font: { size: 16 }
+                                font: { size: isMobileDevice() ? 14 : 16 }
                             },
                             legend: { display: false },
                             tooltip: {
@@ -1798,21 +1885,21 @@
                 tempElement.style.position = 'absolute';
                 tempElement.style.left = '-9999px';
                 tempElement.style.width = isMobileDevice() ? '95%' : '800px';
-                tempElement.style.padding = '20px';
+                tempElement.style.padding = '15px';
                 tempElement.style.backgroundColor = 'white';
                 
                 // Adicionar cabeçalho
                 tempElement.innerHTML = `
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <h1 style="color: #4361ee; margin-bottom: 5px; font-size: ${isMobileDevice() ? '1.5rem' : '2rem'};">FoodFinances</h1>
-                        <h2 style="color: #4361ee; margin-bottom: 15px; font-size: ${isMobileDevice() ? '1.2rem' : '1.5rem'};">Relatório de Resultados</h2>
+                    <div style="text-align: center; margin-bottom: 15px;">
+                        <h1 style="color: #4361ee; margin-bottom: 5px; font-size: ${isMobileDevice() ? '1.3rem' : '1.8rem'};">FoodFinances</h1>
+                        <h2 style="color: #4361ee; margin-bottom: 10px; font-size: ${isMobileDevice() ? '1.1rem' : '1.4rem'};">Relatório de Resultados</h2>
                     </div>
                     
                     <div style="margin-bottom: 15px;">
-                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 10px; font-size: ${isMobileDevice() ? '1rem' : '1.2rem'};">Informações do Produto</h3>
-                        <p style="margin-bottom: 5px;"><strong>Nome:</strong> ${currentProduct.name || 'Não informado'}</p>
-                        <p style="margin-bottom: 5px;"><strong>Rendimento:</strong> ${currentProduct.yield} unidades</p>
-                        <p><strong>Data:</strong> ${new Date().toLocaleDateString()}</p>
+                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 8px; font-size: ${isMobileDevice() ? '0.95rem' : '1.1rem'};">Informações do Produto</h3>
+                        <p style="margin-bottom: 5px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Nome:</strong> ${currentProduct.name || 'Não informado'}</p>
+                        <p style="margin-bottom: 5px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Rendimento:</strong> ${currentProduct.yield} unidades</p>
+                        <p style="font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Data:</strong> ${new Date().toLocaleDateString()}</p>
                     </div>
                 `;
                 
@@ -1820,20 +1907,27 @@
                 const resultsContainer = document.getElementById('results-container').cloneNode(true);
                 resultsContainer.style.display = 'grid';
                 resultsContainer.style.gridTemplateColumns = isMobileDevice() ? '1fr' : '1fr 1fr';
-                resultsContainer.style.gap = '10px';
-                resultsContainer.style.marginBottom = '20px';
+                resultsContainer.style.gap = '8px';
+                resultsContainer.style.marginBottom = '15px';
                 
                 // Remover hover effects para impressão
                 Array.from(resultsContainer.children).forEach(item => {
                     item.style.transform = 'none';
                     item.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+                    item.style.padding = '10px';
+                    
+                    const h3 = item.querySelector('h3');
+                    if (h3) h3.style.fontSize = isMobileDevice() ? '0.8rem' : '0.9rem';
+                    
+                    const value = item.querySelector('.result-value');
+                    if (value) value.style.fontSize = isMobileDevice() ? '1rem' : '1.2rem';
                 });
                 
                 tempElement.appendChild(resultsContainer);
                 
                 // Adicionar rodapé
                 tempElement.innerHTML += `
-                    <div style="text-align: center; color: #6c757d; font-size: 0.8rem; margin-top: 20px; border-top: 1px solid #e9ecef; padding-top: 10px;">
+                    <div style="text-align: center; color: #6c757d; font-size: ${isMobileDevice() ? '0.7rem' : '0.8rem'}; margin-top: 15px; border-top: 1px solid #e9ecef; padding-top: 8px;">
                         <p>FoodFinances - Sistema de Gestão Financeira para Microempreendedores</p>
                         <p>Relatório gerado em ${new Date().toLocaleString()}</p>
                     </div>
@@ -1883,10 +1977,10 @@
                 // Adicionar cabeçalho
                 pdf.setFont('helvetica', 'bold');
                 pdf.setTextColor(67, 97, 238);
-                pdf.setFontSize(isMobileDevice() ? 16 : 20);
+                pdf.setFontSize(isMobileDevice() ? 14 : 16);
                 pdf.text('FoodFinances - Análise Gráfica', pdf.internal.pageSize.getWidth() / 2, 15, { align: 'center' });
                 
-                pdf.setFontSize(isMobileDevice() ? 12 : 14);
+                pdf.setFontSize(isMobileDevice() ? 10 : 12);
                 pdf.setTextColor(0, 0, 0);
                 pdf.text(`Produto: ${currentProduct.name || 'Não informado'}`, 15, 25);
                 pdf.text(`Data: ${new Date().toLocaleDateString()}`, 15, 30);
@@ -1907,7 +2001,7 @@
                 yPosition += imgHeight + 5;
                 
                 // Adicionar legenda
-                pdf.setFontSize(isMobileDevice() ? 10 : 12);
+                pdf.setFontSize(isMobileDevice() ? 9 : 10);
                 pdf.text('Legenda:', 15, yPosition);
                 yPosition += 5;
                 
@@ -1920,15 +2014,15 @@
                 legendItems.forEach(item => {
                     // Caixa de cor
                     pdf.setFillColor(item.color[0], item.color[1], item.color[2]);
-                    pdf.rect(15, yPosition, 5, 5, 'F');
+                    pdf.rect(15, yPosition, 4, 4, 'F');
                     
                     // Texto da legenda
-                    pdf.text(item.text, 22, yPosition + 4);
-                    yPosition += 8;
+                    pdf.text(item.text, 21, yPosition + 3);
+                    yPosition += 6;
                 });
                 
                 // Rodapé
-                pdf.setFontSize(10);
+                pdf.setFontSize(9);
                 pdf.setTextColor(100, 100, 100);
                 pdf.text('FoodFinances - Sistema de Gestão Financeira para Microempreendedores', 
                         pdf.internal.pageSize.getWidth() / 2, pdf.internal.pageSize.getHeight() - 10, 
@@ -1946,61 +2040,61 @@
                 tempElement.style.position = 'absolute';
                 tempElement.style.left = '-9999px';
                 tempElement.style.width = isMobileDevice() ? '95%' : '800px';
-                tempElement.style.padding = '20px';
+                tempElement.style.padding = '15px';
                 tempElement.style.backgroundColor = 'white';
                 
                 // Adicionar cabeçalho
                 tempElement.innerHTML = `
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <h1 style="color: #4361ee; margin-bottom: 5px; font-size: ${isMobileDevice() ? '1.5rem' : '2rem'};">FoodFinances</h1>
-                        <h2 style="color: #4361ee; margin-bottom: 15px; font-size: ${isMobileDevice() ? '1.2rem' : '1.5rem'};">Relatório Completo de Análise</h2>
+                    <div style="text-align: center; margin-bottom: 15px;">
+                        <h1 style="color: #4361ee; margin-bottom: 5px; font-size: ${isMobileDevice() ? '1.3rem' : '1.8rem'};">FoodFinances</h1>
+                        <h2 style="color: #4361ee; margin-bottom: 10px; font-size: ${isMobileDevice() ? '1.1rem' : '1.4rem'};">Relatório Completo de Análise</h2>
                     </div>
                     
-                    <div style="margin-bottom: 20px;">
-                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 10px; font-size: ${isMobileDevice() ? '1rem' : '1.2rem'};">Informações do Produto</h3>
-                        <p style="margin-bottom: 5px;"><strong>Nome:</strong> ${currentProduct.name || 'Não informado'}</p>
-                        <p style="margin-bottom: 5px;"><strong>Descrição:</strong> ${currentProduct.description || 'Não informada'}</p>
-                        <p style="margin-bottom: 5px;"><strong>Rendimento:</strong> ${currentProduct.yield} unidades</p>
-                        <p><strong>Data da análise:</strong> ${new Date().toLocaleDateString()}</p>
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 8px; font-size: ${isMobileDevice() ? '0.95rem' : '1.1rem'};">Informações do Produto</h3>
+                        <p style="margin-bottom: 5px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Nome:</strong> ${currentProduct.name || 'Não informado'}</p>
+                        <p style="margin-bottom: 5px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Descrição:</strong> ${currentProduct.description || 'Não informada'}</p>
+                        <p style="margin-bottom: 5px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Rendimento:</strong> ${currentProduct.yield} unidades</p>
+                        <p style="font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Data da análise:</strong> ${new Date().toLocaleDateString()}</p>
                     </div>
                 `;
                 
                 // Adicionar resultados
                 tempElement.innerHTML += `
-                    <div style="margin-bottom: 20px;">
-                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 10px; font-size: ${isMobileDevice() ? '1rem' : '1.2rem'};">Resultados Financeiros</h3>
-                        <div style="display: grid; grid-template-columns: ${isMobileDevice() ? '1fr' : '1fr 1fr'}; gap: 10px;">
-                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
-                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Custo Total da Receita</p>
-                                <p style="font-weight: bold; font-size: 1.1rem;">${formatCurrency(currentProduct.totalCost)}</p>
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 8px; font-size: ${isMobileDevice() ? '0.95rem' : '1.1rem'};">Resultados Financeiros</h3>
+                        <div style="display: grid; grid-template-columns: ${isMobileDevice() ? '1fr' : '1fr 1fr'}; gap: 8px;">
+                            <div style="background: #f8f9fa; padding: 10px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'}; margin-bottom: 5px;">Custo Total da Receita</p>
+                                <p style="font-weight: bold; font-size: ${isMobileDevice() ? '1rem' : '1.1rem'};">${formatCurrency(currentProduct.totalCost)}</p>
                             </div>
-                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
-                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Custo por Unidade</p>
-                                <p style="font-weight: bold; font-size: 1.1rem;">${formatCurrency(currentProduct.unitCost)}</p>
+                            <div style="background: #f8f9fa; padding: 10px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'}; margin-bottom: 5px;">Custo por Unidade</p>
+                                <p style="font-weight: bold; font-size: ${isMobileDevice() ? '1rem' : '1.1rem'};">${formatCurrency(currentProduct.unitCost)}</p>
                             </div>
-                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
-                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Preço de Venda Sugerido</p>
-                                <p style="font-weight: bold; font-size: 1.1rem;">${formatCurrency(currentProduct.suggestedPrice)}</p>
+                            <div style="background: #f8f9fa; padding: 10px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'}; margin-bottom: 5px;">Preço de Venda Sugerido</p>
+                                <p style="font-weight: bold; font-size: ${isMobileDevice() ? '1rem' : '1.1rem'};">${formatCurrency(currentProduct.suggestedPrice)}</p>
                             </div>
-                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
-                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Preço de Venda no iFood</p>
-                                <p style="font-weight: bold; font-size: 1.1rem;">${formatCurrency(currentProduct.ifoodPrice)}</p>
+                            <div style="background: #f8f9fa; padding: 10px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'}; margin-bottom: 5px;">Preço de Venda no iFood</p>
+                                <p style="font-weight: bold; font-size: ${isMobileDevice() ? '1rem' : '1.1rem'};">${formatCurrency(currentProduct.ifoodPrice)}</p>
                             </div>
-                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
-                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Lucro por Unidade (Venda Direta)</p>
-                                <p style="font-weight: bold; font-size: 1.1rem; color: ${currentProduct.unitProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.unitProfit)}</p>
+                            <div style="background: #f8f9fa; padding: 10px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'}; margin-bottom: 5px;">Lucro por Unidade (Venda Direta)</p>
+                                <p style="font-weight: bold; font-size: ${isMobileDevice() ? '1rem' : '1.1rem'}; color: ${currentProduct.unitProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.unitProfit)}</p>
                             </div>
-                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
-                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Lucro por Unidade (iFood)</p>
-                                <p style="font-weight: bold; font-size: 1.1rem; color: ${currentProduct.ifoodProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.ifoodProfit)}</p>
+                            <div style="background: #f8f9fa; padding: 10px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'}; margin-bottom: 5px;">Lucro por Unidade (iFood)</p>
+                                <p style="font-weight: bold; font-size: ${isMobileDevice() ? '1rem' : '1.1rem'}; color: ${currentProduct.ifoodProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.ifoodProfit)}</p>
                             </div>
-                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
-                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Margem de Lucro</p>
-                                <p style="font-weight: bold; font-size: 1.1rem; color: ${currentProduct.profitMargin >= 0 ? '#38b000' : '#f72585'}">${currentProduct.profitMargin}%</p>
+                            <div style="background: #f8f9fa; padding: 10px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'}; margin-bottom: 5px;">Margem de Lucro</p>
+                                <p style="font-weight: bold; font-size: ${isMobileDevice() ? '1rem' : '1.1rem'}; color: ${currentProduct.profitMargin >= 0 ? '#38b000' : '#f72585'}">${currentProduct.profitMargin}%</p>
                             </div>
-                            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px;">
-                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Lucro Total da Receita</p>
-                                <p style="font-weight: bold; font-size: 1.1rem; color: ${currentProduct.totalProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.totalProfit)}</p>
+                            <div style="background: #f8f9fa; padding: 10px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'}; margin-bottom: 5px;">Lucro Total da Receita</p>
+                                <p style="font-weight: bold; font-size: ${isMobileDevice() ? '1rem' : '1.1rem'}; color: ${currentProduct.totalProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.totalProfit)}</p>
                             </div>
                         </div>
                     </div>
@@ -2010,21 +2104,21 @@
                 const chartCanvas = document.getElementById('profitChart');
                 const chartImg = chartCanvas.toDataURL('image/png');
                 tempElement.innerHTML += `
-                    <div style="margin-bottom: 20px;">
-                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 10px; font-size: ${isMobileDevice() ? '1rem' : '1.2rem'};">Análise Gráfica</h3>
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 8px; font-size: ${isMobileDevice() ? '0.95rem' : '1.1rem'};">Análise Gráfica</h3>
                         <img src="${chartImg}" style="width: 100%; height: auto; border-radius: 6px;">
-                        <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 5px;">
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <div style="width: 15px; height: 15px; background-color: #6c757d; border-radius: 3px;"></div>
-                                <span style="font-size: 0.9rem;">Custo Unitário</span>
+                        <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 5px;">
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <div style="width: 12px; height: 12px; background-color: #6c757d; border-radius: 2px;"></div>
+                                <span style="font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'};">Custo Unitário</span>
                             </div>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <div style="width: 15px; height: 15px; background-color: #38b000; border-radius: 3px;"></div>
-                                <span style="font-size: 0.9rem;">Lucro Venda Direta</span>
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <div style="width: 12px; height: 12px; background-color: #38b000; border-radius: 2px;"></div>
+                                <span style="font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'};">Lucro Venda Direta</span>
                             </div>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <div style="width: 15px; height: 15px; background-color: #4361ee; border-radius: 3px;"></div>
-                                <span style="font-size: 0.9rem;">Lucro iFood</span>
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <div style="width: 12px; height: 12px; background-color: #4361ee; border-radius: 2px;"></div>
+                                <span style="font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'};">Lucro iFood</span>
                             </div>
                         </div>
                     </div>
@@ -2032,7 +2126,7 @@
                 
                 // Adicionar rodapé
                 tempElement.innerHTML += `
-                    <div style="text-align: center; color: #6c757d; font-size: 0.8rem; margin-top: 20px; border-top: 1px solid #e9ecef; padding-top: 10px;">
+                    <div style="text-align: center; color: #6c757d; font-size: ${isMobileDevice() ? '0.7rem' : '0.8rem'}; margin-top: 15px; border-top: 1px solid #e9ecef; padding-top: 8px;">
                         <p>FoodFinances - Sistema de Gestão Financeira para Microempreendedores</p>
                         <p>Relatório gerado em ${new Date().toLocaleString()}</p>
                     </div>
