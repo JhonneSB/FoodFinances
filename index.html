@@ -3,10 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FoodFinances - Gestão Financeira para Microempreendedores</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -27,8 +26,8 @@
             --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
             --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
             --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
-            --border-radius: 12px;
-            --border-radius-sm: 6px;
+            --border-radius: 10px;
+            --border-radius-sm: 5px;
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
@@ -37,6 +36,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -44,21 +44,26 @@
             color: var(--text-color);
             line-height: 1.6;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            touch-action: manipulation;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 15px;
+            flex: 1;
+            width: 100%;
         }
 
         header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: var(--text-light);
-            padding: 25px 0;
+            padding: 20px 0;
             text-align: center;
             box-shadow: var(--shadow-md);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             position: relative;
             overflow: hidden;
         }
@@ -76,7 +81,7 @@
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             margin-bottom: 10px;
             font-weight: 700;
             position: relative;
@@ -96,19 +101,20 @@
         }
 
         .subtitle {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             opacity: 0.9;
             font-weight: 300;
             max-width: 700px;
             margin: 0 auto;
+            padding: 0 15px;
         }
 
         .card {
             background-color: white;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow-sm);
-            padding: 25px;
-            margin-bottom: 25px;
+            padding: 15px;
+            margin-bottom: 20px;
             transition: var(--transition);
             border: 1px solid var(--light-gray);
         }
@@ -120,23 +126,23 @@
 
         .card-title {
             color: var(--primary-color);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 2px solid var(--light-gray);
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .card-title i {
-            font-size: 1.2em;
+            font-size: 1.1em;
             color: var(--accent-color);
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             position: relative;
         }
 
@@ -145,14 +151,14 @@
             margin-bottom: 8px;
             font-weight: 500;
             color: var(--dark-color);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .form-group small {
             display: block;
             margin-top: 5px;
             color: var(--gray-color);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         input,
@@ -164,6 +170,8 @@
             font-size: 1rem;
             transition: var(--transition);
             background-color: white;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
         input:focus,
@@ -173,11 +181,19 @@
             box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
         }
 
+        select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236c757d'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px;
+            padding-right: 30px;
+        }
+
         button {
             background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 12px 15px;
             border-radius: var(--border-radius-sm);
             cursor: pointer;
             font-size: 1rem;
@@ -187,6 +203,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            width: 100%;
         }
 
         button:hover {
@@ -223,9 +240,9 @@
 
         .btn-group {
             display: flex;
-            gap: 12px;
+            flex-direction: column;
+            gap: 10px;
             margin-top: 20px;
-            flex-wrap: wrap;
         }
 
         .btn-group button {
@@ -245,7 +262,7 @@
 
         th,
         td {
-            padding: 15px;
+            padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid var(--light-gray);
         }
@@ -255,7 +272,7 @@
             color: white;
             font-weight: 500;
             text-transform: uppercase;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 0.5px;
         }
 
@@ -298,14 +315,14 @@
         }
 
         .results {
-            margin-top: 30px;
+            margin-top: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr;
+            gap: 15px;
         }
 
         .result-item {
-            padding: 20px;
+            padding: 15px;
             background-color: white;
             border-radius: var(--border-radius-sm);
             box-shadow: var(--shadow-sm);
@@ -320,7 +337,7 @@
 
         .result-item h3 {
             color: var(--gray-color);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             margin-bottom: 5px;
             text-transform: uppercase;
@@ -329,7 +346,7 @@
 
         .result-value {
             font-weight: 700;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -348,10 +365,10 @@
         }
 
         .chart-container {
-            height: 350px;
-            margin-top: 30px;
+            height: 300px;
+            margin-top: 20px;
             background-color: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow-sm);
         }
@@ -361,23 +378,31 @@
         }
 
         .tabs {
-            display: flex;
-            margin-bottom: 25px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            margin-bottom: 20px;
             border-bottom: 1px solid var(--light-gray);
-            position: relative;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            gap: 5px;
+            padding-bottom: 5px;
         }
 
         .tab {
-            padding: 12px 25px;
+            padding: 10px 5px;
             cursor: pointer;
             font-weight: 500;
             color: var(--gray-color);
             position: relative;
             transition: var(--transition);
-            border-bottom: 3px solid transparent;
+            border-bottom: 2px solid transparent;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
+            white-space: nowrap;
+            min-width: max-content;
+            font-size: 0.85rem;
+            justify-content: center;
         }
 
         .tab:hover {
@@ -394,7 +419,7 @@
         }
 
         .tab i {
-            font-size: 1.1em;
+            font-size: 1em;
             color: var(--gray-color);
         }
 
@@ -409,27 +434,23 @@
 
         .ingredient-list,
         .packaging-list {
-            margin-top: 20px;
+            margin-top: 15px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
         }
 
         .ingredient-item,
         .packaging-item {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr auto;
+            grid-template-columns: 1fr;
             gap: 10px;
             align-items: center;
             background-color: white;
-            padding: 15px;
+            padding: 12px;
             border-radius: var(--border-radius-sm);
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
-        }
-
-        .ingredient-item {
-            grid-template-columns: 2fr 1fr 1fr 1fr auto;
         }
 
         .ingredient-item:hover,
@@ -441,9 +462,9 @@
             background-color: var(--danger-color);
             color: white;
             border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
+            width: 100%;
+            height: 40px;
+            border-radius: var(--border-radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -452,7 +473,7 @@
         }
 
         .remove-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.02);
             box-shadow: 0 2px 5px rgba(247, 37, 133, 0.3);
         }
 
@@ -479,11 +500,17 @@
 
         footer {
             text-align: center;
-            padding: 30px;
-            margin-top: 50px;
+            padding: 20px 10px;
+            margin-top: 30px;
             background-color: var(--dark-color);
             color: var(--text-light);
             border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
         }
 
         footer a {
@@ -500,8 +527,9 @@
 
         .footer-links {
             display: flex;
+            flex-direction: column;
             justify-content: center;
-            gap: 20px;
+            gap: 8px;
             margin: 15px 0;
         }
 
@@ -512,13 +540,13 @@
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
+            gap: 10px;
+            margin: 15px 0;
         }
 
         .social-links a {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background-color: rgba(255, 255, 255, 0.1);
             display: flex;
@@ -533,7 +561,7 @@
         }
 
         .print-btn {
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         /* Animations */
@@ -574,21 +602,21 @@
         /* Toast notifications */
         .toast {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 15px;
+            right: 15px;
             background-color: var(--primary-color);
             color: white;
-            padding: 15px 25px;
+            padding: 12px 20px;
             border-radius: var(--border-radius-sm);
             box-shadow: var(--shadow-lg);
             z-index: 1000;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
             transform: translateX(150%);
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            max-width: 350px;
+            max-width: calc(100% - 30px);
         }
 
         .toast.show {
@@ -614,7 +642,7 @@
         }
 
         .toast i {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
         }
 
         .close-toast {
@@ -622,9 +650,9 @@
             border: none;
             color: inherit;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             padding: 0;
-            margin-left: 15px;
+            margin-left: 10px;
             opacity: 0.8;
             transition: var(--transition);
         }
@@ -641,10 +669,11 @@
         .toast-title {
             font-weight: 600;
             margin-bottom: 5px;
+            font-size: 0.95rem;
         }
 
         .toast-message {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             opacity: 0.9;
         }
 
@@ -665,84 +694,6 @@
             }
         }
 
-        /* Responsive styles */
-        @media (max-width: 992px) {
-            .container {
-                padding: 15px;
-            }
-
-            .results {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-            }
-
-            .card {
-                padding: 20px;
-            }
-
-            .card-title {
-                font-size: 1.3rem;
-            }
-
-            .tab {
-                padding: 10px 15px;
-                font-size: 0.9rem;
-            }
-
-            .ingredient-item,
-            .packaging-item {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .ingredient-item .remove-btn,
-            .packaging-item .remove-btn {
-                grid-column: span 2;
-                width: 100%;
-                border-radius: var(--border-radius-sm);
-            }
-        }
-
-        @media (max-width: 576px) {
-            .tabs {
-                overflow-x: auto;
-                white-space: nowrap;
-                padding-bottom: 5px;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .tab {
-                padding: 10px 15px;
-                font-size: 0.85rem;
-            }
-
-            .btn-group {
-                flex-direction: column;
-            }
-
-            .btn-group button {
-                width: 100%;
-            }
-
-            .results {
-                grid-template-columns: 1fr;
-            }
-
-            .toast {
-                max-width: calc(100% - 40px);
-                right: 20px;
-                bottom: 20px;
-            }
-        }
-
         /* Tooltip */
         .tooltip {
             position: relative;
@@ -751,12 +702,12 @@
 
         .tooltip .tooltip-text {
             visibility: hidden;
-            width: 200px;
+            width: 180px;
             background-color: var(--dark-color);
             color: white;
             text-align: center;
             border-radius: var(--border-radius-sm);
-            padding: 10px;
+            padding: 8px;
             position: absolute;
             z-index: 1;
             bottom: 125%;
@@ -764,7 +715,7 @@
             transform: translateX(-50%);
             opacity: 0;
             transition: opacity 0.3s;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: normal;
         }
 
@@ -782,6 +733,195 @@
         .tooltip:hover .tooltip-text {
             visibility: visible;
             opacity: 1;
+        }
+
+        /* Mobile Keyboard Done Button */
+        .mobile-keyboard-done {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--primary-color);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            z-index: 9999;
+            cursor: pointer;
+            display: none;
+        }
+
+        /* History table actions */
+        .actions-cell {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .actions-cell button {
+            width: auto;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+        }
+
+        /* Landscape orientation adjustments */
+        @media (orientation: landscape) and (max-height: 500px) {
+            header {
+                padding: 15px 0;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .card {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+            
+            .chart-container {
+                height: 250px;
+            }
+            
+            .form-group {
+                margin-bottom: 12px;
+            }
+            
+            .btn-group {
+                margin-top: 15px;
+            }
+            
+            .result-item {
+                padding: 10px;
+            }
+        }
+
+        /* Larger screens adjustments */
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .card {
+                padding: 20px;
+                margin-bottom: 25px;
+            }
+
+            .card-title {
+                font-size: 1.3rem;
+            }
+
+            .results {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tabs {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .tab {
+                padding: 12px 10px;
+                font-size: 0.9rem;
+                gap: 8px;
+            }
+
+            .btn-group {
+                flex-direction: row;
+                gap: 12px;
+            }
+
+            button {
+                width: auto;
+            }
+
+            .footer-links {
+                flex-direction: row;
+                gap: 20px;
+            }
+
+            .ingredient-item {
+                grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            }
+
+            .packaging-item {
+                grid-template-columns: 2fr 1fr 1fr auto;
+            }
+
+            .remove-btn {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+            }
+        }
+
+        @media (min-width: 992px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .card-title {
+                font-size: 1.4rem;
+            }
+
+            .results {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .result-value {
+                font-size: 1.4rem;
+            }
+
+            /* History table adjustments for desktop */
+            #history-table {
+                display: table;
+                width: 100%;
+            }
+
+            #history-table th,
+            #history-table td {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 200px;
+            }
+
+            #history-table .product-cell {
+                min-width: 150px;
+                max-width: 250px;
+            }
+
+            #history-table .date-cell {
+                min-width: 120px;
+            }
+
+            #history-table .price-cell {
+                min-width: 80px;
+            }
+
+            #history-table .profit-cell {
+                min-width: 80px;
+            }
+
+            #history-table .actions-cell {
+                min-width: 160px;
+            }
+        }
+
+        /* Responsive table for mobile */
+        @media (max-width: 767px) {
+            #history-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
         }
     </style>
 </head>
@@ -822,15 +962,15 @@
                 <h2 class="card-title"><i class="fas fa-info-circle"></i> Informações do Produto</h2>
                 <div class="form-group">
                     <label for="product-name">Nome do Produto</label>
-                    <input type="text" id="product-name" placeholder="Ex: Brigadeiro Gourmet">
+                    <input type="text" id="product-name" placeholder="Ex: Brigadeiro Gourmet" inputmode="text">
                 </div>
                 <div class="form-group">
                     <label for="product-yield">Rendimento (quantidade produzida)</label>
-                    <input type="number" id="product-yield" placeholder="Ex: 30" min="1" value="1">
+                    <input type="number" id="product-yield" placeholder="Ex: 30" min="1" value="1" inputmode="numeric">
                 </div>
                 <div class="form-group">
                     <label for="product-description">Descrição (opcional)</label>
-                    <input type="text" id="product-description" placeholder="Descreva seu produto">
+                    <input type="text" id="product-description" placeholder="Descreva seu produto" inputmode="text">
                 </div>
                 <div class="btn-group">
                     <button id="save-product">
@@ -840,7 +980,7 @@
             </div>
         </div>
 
-        <!-- Ingredientes Tab (versão simplificada) -->
+        <!-- Ingredientes Tab -->
         <div class="tab-content" id="ingredients-tab">
             <div class="card fade-in">
                 <h2 class="card-title"><i class="fas fa-carrot"></i> Ingredientes</h2>
@@ -856,7 +996,7 @@
 
                 <div class="form-group">
                     <label for="additional-costs">Custos Adicionais (opcional)</label>
-                    <input type="number" id="additional-costs" placeholder="Ex: 10,00" min="0" step="0.01">
+                    <input type="number" id="additional-costs" placeholder="Ex: 10,00" min="0" step="0.01" inputmode="decimal">
                     <small>Inclua custos como gás, energia, água, mão de obra, etc.</small>
                 </div>
 
@@ -896,15 +1036,15 @@
                 <h2 class="card-title"><i class="fas fa-motorcycle"></i> Configurações iFood</h2>
                 <div class="form-group">
                     <label for="ifood-fee">Taxa do iFood (%)</label>
-                    <input type="number" id="ifood-fee" placeholder="Ex: 25" min="0" max="100" value="25">
+                    <input type="number" id="ifood-fee" placeholder="Ex: 25" min="0" max="100" value="25" inputmode="numeric">
                 </div>
                 <div class="form-group">
                     <label for="delivery-fee">Taxa de Entrega (R$)</label>
-                    <input type="number" id="delivery-fee" placeholder="Ex: 5,00" min="0" step="0.01" value="5">
+                    <input type="number" id="delivery-fee" placeholder="Ex: 5,00" min="0" step="0.01" value="5" inputmode="decimal">
                 </div>
                 <div class="form-group">
                     <label for="sale-price">Preço de Venda (R$)</label>
-                    <input type="number" id="sale-price" placeholder="Ex: 8,00" min="0" step="0.01">
+                    <input type="number" id="sale-price" placeholder="Ex: 8,00" min="0" step="0.01" inputmode="decimal">
                 </div>
                 <div class="btn-group">
                     <button id="calculate-ifood">
@@ -991,12 +1131,12 @@
                 <table id="history-table">
                     <thead>
                         <tr>
-                            <th>Produto</th>
-                            <th>Data</th>
-                            <th>Custo Unit.</th>
-                            <th>Preço Venda</th>
-                            <th>Lucro</th>
-                            <th>Ações</th>
+                            <th class="product-cell">Produto</th>
+                            <th class="date-cell">Data</th>
+                            <th class="price-cell">Custo Unit.</th>
+                            <th class="price-cell">Preço Venda</th>
+                            <th class="profit-cell">Lucro</th>
+                            <th class="actions-cell">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1017,21 +1157,8 @@
         <div class="container">
             <p>FoodFinances - Sistema de Gestão Financeira para Microempreendedores de Alimentos</p>
 
-            <div class="footer-links">
-                <a href="#"><i class="fas fa-question-circle"></i> Ajuda</a>
-                <a href="#"><i class="fas fa-envelope"></i> Contato</a>
-                <a href="#"><i class="fas fa-shield-alt"></i> Privacidade</a>
-            </div>
-
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-            </div>
-
             <p>© <span id="current-year"></span> - Todos os direitos reservados</p>
-            <p>Desenvolvido com ❤️ por <a href="#" id="developer-link">Sua Equipe</a></p>
+            <p>Desenvolvido por <a href="https://portfolio-jhonne.vercel.app/" target="_blank">Carlos Jhonne</a></p>
         </div>
     </footer>
 
@@ -1044,10 +1171,11 @@
         <button class="close-toast">&times;</button>
     </div>
 
+    <div class="mobile-keyboard-done" id="mobile-keyboard-done">Concluído</div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Elementos do DOM
@@ -1078,6 +1206,31 @@
             const closeToastBtn = document.querySelector('.close-toast');
             const toastMessage = document.getElementById('toast-message');
             const currentYearSpan = document.getElementById('current-year');
+            const mobileKeyboardDone = document.getElementById('mobile-keyboard-done');
+
+            // Verificar se é dispositivo móvel
+            function isMobileDevice() {
+                return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+            }
+
+            // Configurar teclado móvel
+            function setupMobileKeyboard() {
+                if (!isMobileDevice()) return;
+                
+                document.querySelectorAll('input, select').forEach(input => {
+                    input.addEventListener('focus', function() {
+                        mobileKeyboardDone.style.display = 'block';
+                    });
+                    
+                    input.addEventListener('blur', function() {
+                        mobileKeyboardDone.style.display = 'none';
+                    });
+                });
+                
+                mobileKeyboardDone.addEventListener('click', function() {
+                    document.activeElement.blur();
+                });
+            }
 
             // Variáveis de estado
             let currentProduct = {
@@ -1100,7 +1253,7 @@
                 totalProfit: 0,
                 createdAt: null
             };
-
+            
             let profitChart = null;
             let history = JSON.parse(localStorage.getItem('foodFinancesHistory')) || [];
 
@@ -1109,13 +1262,14 @@
                 currentYearSpan.textContent = new Date().getFullYear();
                 ifoodFeeInput.value = currentProduct.ifoodFee;
                 deliveryFeeInput.value = currentProduct.deliveryFee;
-
+                
                 // Adiciona um ingrediente e embalagem padrão ao carregar
                 addIngredientItem();
                 addPackagingItem();
-
+                
                 // Configurar event listeners
                 setupEventListeners();
+                setupMobileKeyboard();
             }
 
             // Configurar event listeners
@@ -1172,20 +1326,20 @@
                 ingredientItem.dataset.id = ingredientId;
 
                 ingredientItem.innerHTML = `
-            <input type="text" class="ingredient-name" placeholder="Nome do ingrediente" value="${ingredient?.name || ''}">
-            <input type="number" class="ingredient-quantity" placeholder="Quantidade" min="0" step="0.001" value="${ingredient?.quantity || ''}">
-            <select class="ingredient-unit">
-                <option value="g" ${ingredient?.unit === 'g' ? 'selected' : ''}>g</option>
-                <option value="kg" ${ingredient?.unit === 'kg' ? 'selected' : ''}>kg</option>
-                <option value="ml" ${ingredient?.unit === 'ml' ? 'selected' : ''}>ml</option>
-                <option value="l" ${ingredient?.unit === 'l' ? 'selected' : ''}>l</option>
-                <option value="un" ${ingredient?.unit === 'un' ? 'selected' : ''}>un</option>
-            </select>
-            <input type="number" class="ingredient-price" placeholder="Valor (R$)" min="0" step="0.01" value="${ingredient?.price || ''}">
-            <button class="remove-btn" data-id="${ingredientId}">
-                <i class="fas fa-times"></i>
-            </button>
-        `;
+                    <input type="text" class="ingredient-name" placeholder="Nome do ingrediente" value="${ingredient?.name || ''}" inputmode="text">
+                    <input type="number" class="ingredient-quantity" placeholder="Quantidade" min="0" step="0.001" value="${ingredient?.quantity || ''}" inputmode="decimal">
+                    <select class="ingredient-unit">
+                        <option value="g" ${ingredient?.unit === 'g' ? 'selected' : ''}>g</option>
+                        <option value="kg" ${ingredient?.unit === 'kg' ? 'selected' : ''}>kg</option>
+                        <option value="ml" ${ingredient?.unit === 'ml' ? 'selected' : ''}>ml</option>
+                        <option value="l" ${ingredient?.unit === 'l' ? 'selected' : ''}>l</option>
+                        <option value="un" ${ingredient?.unit === 'un' ? 'selected' : ''}>un</option>
+                    </select>
+                    <input type="number" class="ingredient-price" placeholder="Valor (R$)" min="0" step="0.01" value="${ingredient?.price || ''}" inputmode="decimal">
+                    <button class="remove-btn" data-id="${ingredientId}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
 
                 ingredientList.appendChild(ingredientItem);
                 ingredientItem.querySelector('.remove-btn').addEventListener('click', () => ingredientItem.remove());
@@ -1199,13 +1353,13 @@
                 packagingItem.dataset.id = packagingId;
 
                 packagingItem.innerHTML = `
-            <input type="text" class="packaging-name" placeholder="Nome da embalagem" value="${packaging?.name || ''}">
-            <input type="number" class="packaging-quantity" placeholder="Quantidade" min="0" step="1" value="${packaging?.quantity || ''}">
-            <input type="number" class="packaging-price" placeholder="Valor (R$)" min="0" step="0.01" value="${packaging?.price || ''}">
-            <button class="remove-btn" data-id="${packagingId}">
-                <i class="fas fa-times"></i>
-            </button>
-        `;
+                    <input type="text" class="packaging-name" placeholder="Nome da embalagem" value="${packaging?.name || ''}" inputmode="text">
+                    <input type="number" class="packaging-quantity" placeholder="Quantidade" min="0" step="1" value="${packaging?.quantity || ''}" inputmode="numeric">
+                    <input type="number" class="packaging-price" placeholder="Valor (R$)" min="0" step="0.01" value="${packaging?.price || ''}" inputmode="decimal">
+                    <button class="remove-btn" data-id="${packagingId}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
 
                 packagingList.appendChild(packagingItem);
                 packagingItem.querySelector('.remove-btn').addEventListener('click', () => packagingItem.remove());
@@ -1295,13 +1449,13 @@
                 // Cálculos
                 const ingredientsCost = currentProduct.ingredients.reduce((sum, ing) => sum + ing.price, 0);
                 const packagingCost = currentProduct.packaging.reduce((sum, pack) => sum + pack.price, 0);
-
+                
                 currentProduct.totalCost = ingredientsCost + packagingCost + currentProduct.additionalCosts;
                 currentProduct.unitCost = currentProduct.totalCost / currentProduct.yield;
                 currentProduct.suggestedPrice = currentProduct.unitCost * 3;
                 currentProduct.ifoodPrice = currentProduct.salePrice;
                 currentProduct.unitProfit = currentProduct.salePrice - currentProduct.unitCost;
-
+                
                 const ifoodFeeAmount = (currentProduct.salePrice * currentProduct.ifoodFee / 100) + currentProduct.deliveryFee;
                 currentProduct.ifoodProfit = currentProduct.salePrice - currentProduct.unitCost - ifoodFeeAmount;
                 currentProduct.profitMargin = ((currentProduct.salePrice - currentProduct.unitCost) / currentProduct.salePrice * 100).toFixed(2);
@@ -1314,7 +1468,7 @@
 
             function updateResultsUI() {
                 const format = value => 'R$ ' + parseFloat(value || 0).toFixed(2).replace('.', ',');
-
+                
                 document.getElementById('total-recipe-cost').textContent = format(currentProduct.totalCost);
                 document.getElementById('unit-cost').textContent = format(currentProduct.unitCost);
                 document.getElementById('suggested-price').textContent = format(currentProduct.suggestedPrice);
@@ -1328,11 +1482,11 @@
 
                 setResultClass('unit-profit', currentProduct.unitProfit);
                 setResultClass('ifood-profit', currentProduct.ifoodProfit);
-
+                
                 const profitMarginElement = document.getElementById('profit-margin');
                 profitMarginElement.textContent = `${currentProduct.profitMargin}%`;
                 profitMarginElement.className = `result-value ${currentProduct.profitMargin >= 0 ? 'profit' : 'loss'}`;
-
+                
                 setResultClass('total-profit', currentProduct.totalProfit);
             }
 
@@ -1340,7 +1494,7 @@
                 const ctx = document.getElementById('profitChart').getContext('2d');
                 const labels = ['Custo', 'Lucro Direto', 'Lucro iFood'];
                 const data = [currentProduct.unitCost, currentProduct.unitProfit, currentProduct.ifoodProfit];
-
+                
                 if (profitChart) profitChart.destroy();
 
                 profitChart = new Chart(ctx, {
@@ -1401,9 +1555,9 @@
 
                 currentProduct.createdAt = new Date().toISOString();
                 history.unshift({ ...currentProduct });
-
+                
                 if (history.length > 50) history = history.slice(0, 50);
-
+                
                 localStorage.setItem('foodFinancesHistory', JSON.stringify(history));
                 showToast('Análise salva no histórico com sucesso!', 'success');
                 loadHistory();
@@ -1430,15 +1584,14 @@
                     row.insertCell().textContent = date.toLocaleDateString() + ' ' + date.toLocaleTimeString().substring(0, 5);
                     row.insertCell().textContent = formatCurrency(item.unitCost);
                     row.insertCell().textContent = formatCurrency(item.salePrice);
-
+                    
                     const profitCell = row.insertCell();
                     profitCell.textContent = formatCurrency(item.unitProfit);
                     profitCell.className = item.unitProfit >= 0 ? 'profit' : 'loss';
 
                     // Célula de ações
                     const actionsCell = row.insertCell();
-                    actionsCell.style.display = 'flex';
-                    actionsCell.style.gap = '8px';
+                    actionsCell.className = 'actions-cell';
 
                     const viewBtn = createActionButton('info', 'fa-eye', 'Visualizar', () => viewAnalysis(item));
                     const deleteBtn = createActionButton('danger', 'fa-trash-alt', 'Excluir', () => deleteAnalysis(item.createdAt));
@@ -1464,16 +1617,16 @@
                 productNameInput.value = currentProduct.name;
                 productYieldInput.value = currentProduct.yield;
                 productDescriptionInput.value = currentProduct.description || '';
-
+                
                 // Ingredientes
                 ingredientList.innerHTML = '';
                 currentProduct.ingredients.forEach(addIngredientItem);
                 additionalCostsInput.value = currentProduct.additionalCosts || 0;
-
+                
                 // Embalagem
                 packagingList.innerHTML = '';
                 currentProduct.packaging.forEach(addPackagingItem);
-
+                
                 // iFood
                 ifoodFeeInput.value = currentProduct.ifoodFee;
                 deliveryFeeInput.value = currentProduct.deliveryFee;
@@ -1597,19 +1750,19 @@
                 pdf.setTextColor(0, 0, 0);
                 pdf.text('Legenda:', 20, yPosition);
                 yPosition += 10;
-
+                
                 // Adicionar legenda colorida
                 const legendItems = [
                     { color: [108, 117, 125], text: 'Custo Unitário' },
                     { color: [56, 176, 0], text: 'Lucro Venda Direta' },
                     { color: [67, 97, 238], text: 'Lucro iFood' }
                 ];
-
+                
                 legendItems.forEach((item, index) => {
                     // Caixa de cor
                     pdf.setFillColor(item.color[0], item.color[1], item.color[2]);
                     pdf.rect(20, yPosition - 3, 10, 10, 'F');
-
+                    
                     // Texto da legenda
                     pdf.text(item.text, 35, yPosition + 3);
                     yPosition += 15;
@@ -1623,6 +1776,113 @@
 
                 pdf.save(`FoodFinances_Grafico_${currentProduct.name}_${new Date().toISOString().slice(0, 10)}.pdf`);
                 showToast('Gráfico exportado com sucesso!', 'success');
+            }
+
+            function printFullReport() {
+                showToast('Preparando relatório completo...', 'info');
+                
+                // Criar um elemento temporário para capturar todo o conteúdo
+                const tempElement = document.createElement('div');
+                tempElement.style.position = 'absolute';
+                tempElement.style.left = '-9999px';
+                tempElement.style.width = '800px';
+                tempElement.style.padding = '20px';
+                tempElement.style.backgroundColor = 'white';
+                
+                // Adicionar cabeçalho
+                tempElement.innerHTML = `
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h1 style="color: #4361ee; margin-bottom: 10px;">FoodFinances</h1>
+                        <h2 style="color: #4361ee; margin-bottom: 20px;">Relatório Completo de Análise</h2>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 15px;">Informações do Produto</h3>
+                        <p><strong>Nome:</strong> ${currentProduct.name || 'Não informado'}</p>
+                        <p><strong>Descrição:</strong> ${currentProduct.description || 'Não informada'}</p>
+                        <p><strong>Rendimento:</strong> ${currentProduct.yield} unidades</p>
+                        <p><strong>Data da análise:</strong> ${new Date().toLocaleDateString()}</p>
+                    </div>
+                `;
+                
+                // Adicionar resultados
+                tempElement.innerHTML += `
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 15px;">Resultados Financeiros</h3>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Custo Total da Receita</p>
+                                <p style="font-weight: bold; font-size: 1.2rem;">${formatCurrency(currentProduct.totalCost)}</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Custo por Unidade</p>
+                                <p style="font-weight: bold; font-size: 1.2rem;">${formatCurrency(currentProduct.unitCost)}</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Preço de Venda Sugerido</p>
+                                <p style="font-weight: bold; font-size: 1.2rem;">${formatCurrency(currentProduct.suggestedPrice)}</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Preço de Venda no iFood</p>
+                                <p style="font-weight: bold; font-size: 1.2rem;">${formatCurrency(currentProduct.ifoodPrice)}</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Lucro por Unidade (Venda Direta)</p>
+                                <p style="font-weight: bold; font-size: 1.2rem; color: ${currentProduct.unitProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.unitProfit)}</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Lucro por Unidade (iFood)</p>
+                                <p style="font-weight: bold; font-size: 1.2rem; color: ${currentProduct.ifoodProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.ifoodProfit)}</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Margem de Lucro</p>
+                                <p style="font-weight: bold; font-size: 1.2rem; color: ${currentProduct.profitMargin >= 0 ? '#38b000' : '#f72585'}">${currentProduct.profitMargin}%</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                                <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 5px;">Lucro Total da Receita</p>
+                                <p style="font-weight: bold; font-size: 1.2rem; color: ${currentProduct.totalProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.totalProfit)}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Adicionar gráfico
+                const chartCanvas = document.getElementById('profitChart');
+                const chartImg = chartCanvas.toDataURL('image/png');
+                tempElement.innerHTML += `
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 5px; margin-bottom: 15px;">Análise Gráfica</h3>
+                        <img src="${chartImg}" style="width: 100%; height: auto; border-radius: 6px;">
+                    </div>
+                `;
+                
+                // Adicionar rodapé
+                tempElement.innerHTML += `
+                    <div style="text-align: center; color: #6c757d; font-size: 0.8rem; margin-top: 30px; border-top: 1px solid #e9ecef; padding-top: 15px;">
+                        <p>FoodFinances - Sistema de Gestão Financeira para Microempreendedores</p>
+                        <p>Relatório gerado em ${new Date().toLocaleString()}</p>
+                    </div>
+                `;
+                
+                document.body.appendChild(tempElement);
+                
+                html2canvas(tempElement, { scale: 2 }).then(canvas => {
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF('p', 'mm', 'a4');
+                    const imgData = canvas.toDataURL('image/png');
+                    const imgWidth = 190;
+                    const imgHeight = canvas.height * imgWidth / canvas.width;
+                    
+                    pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+                    pdf.save(`FoodFinances_Relatorio_Completo_${currentProduct.name}_${new Date().toISOString().slice(0, 10)}.pdf`);
+                    
+                    document.body.removeChild(tempElement);
+                    showToast('Relatório completo exportado com sucesso!', 'success');
+                }).catch(err => {
+                    console.error('Erro ao gerar PDF:', err);
+                    document.body.removeChild(tempElement);
+                    showToast('Erro ao exportar relatório completo', 'error');
+                });
             }
 
             // Funções auxiliares
