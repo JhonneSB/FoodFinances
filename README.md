@@ -1,6 +1,5 @@
 # FoodFinances - Sistema de Gestão Financeira para Alimentos
 
-![FoodFinances Screenshot](https://via.placeholder.com/800x400?text=FoodFinances+Screenshot)
 
 ## 📌 Visão Geral
 O FoodFinances é uma aplicação web desenvolvida para ajudar microempreendedores e pequenos produtores de alimentos a gerenciar seus custos de produção, calcular preços de venda ideais e analisar a lucratividade de seus produtos, especialmente para vendas no iFood e outras plataformas de delivery.
