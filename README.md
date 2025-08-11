@@ -37,7 +37,6 @@ O FoodFinances é uma aplicação web desenvolvida para ajudar microempreendedor
 ## 📦 Instalação Local
 Para rodar localmente:
 
-```bash
 # Clone o repositório
 git clone https://github.com/seu-usuario/foodfinances.git
 
