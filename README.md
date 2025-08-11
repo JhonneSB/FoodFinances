@@ -26,7 +26,7 @@ O FoodFinances é uma aplicação web desenvolvida para ajudar microempreendedor
 - Ícones Font Awesome
 
 ## 🚀 Como Usar
-1. **Acesse a aplicação:** Link para o deploy <!-- Adicione o link quando disponível -->
+1. **Acesse a aplicação:** https://food-finances.vercel.app/
 2. **Cadastre seu produto:** Nome, rendimento e descrição
 3. **Adicione ingredientes:** Com quantidades e preços
 4. **Inclua embalagens:** Itens de packaging utilizados
@@ -60,8 +60,8 @@ Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICE
 
 ## ✉️ Contato
 
-Desenvolvido por [Seu Nome](https://github.com/seu-usuario)  
-Email: seu-email@exemplo.com
+Desenvolvido por [Carlos Jhonne](https://github.com/JhonneSB)  
+Email: carlosjhonne7@gmail.com
 
 ---
 
