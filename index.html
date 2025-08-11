@@ -606,27 +606,29 @@
         /* Toast notifications - Mobile improvements */
         .toast {
             position: fixed;
-            bottom: 10px;
-            right: 10px;
-            left: 10px;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: calc(100% - 30px);
+            max-width: 400px;
             background-color: var(--primary-color);
             color: white;
-            padding: 10px 15px;
-            border-radius: var(--border-radius-sm);
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow-lg);
             z-index: 1000;
             display: flex;
             align-items: center;
-            gap: 8px;
-            transform: translateY(100%);
+            gap: 10px;
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            max-width: 100%;
+            pointer-events: none;
         }
 
         .toast.show {
-            transform: translateY(0);
+            transform: translateX(-50%) translateY(0);
             opacity: 1;
+            pointer-events: auto;
         }
 
         .toast.error {
@@ -647,7 +649,7 @@
         }
 
         .toast i {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             flex-shrink: 0;
         }
 
@@ -656,9 +658,9 @@
             border: none;
             color: inherit;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.1rem;
             padding: 0;
-            margin-left: 8px;
+            margin-left: auto;
             opacity: 0.8;
             transition: var(--transition);
             flex-shrink: 0;
@@ -677,18 +679,21 @@
         .toast-title {
             font-weight: 600;
             margin-bottom: 4px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         .toast-message {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             opacity: 0.9;
-            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            white-space: normal;
         }
 
         /* Loading spinner */
@@ -757,15 +762,20 @@
             right: 0;
             background: var(--primary-color);
             color: white;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
             z-index: 9999;
             cursor: pointer;
             display: none;
-            font-weight: 500;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            font-weight: 600;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
             border-top: 1px solid rgba(255,255,255,0.2);
-            font-size: 0.95rem;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .mobile-keyboard-done:active {
+            background-color: var(--secondary-color);
         }
 
         /* History table actions */
@@ -813,10 +823,10 @@
                 padding: 8px;
             }
             
-            /* Improve toast for landscape */
+            /* Toast adjustments */
             .toast {
-                left: auto;
-                max-width: 60%;
+                bottom: 10px;
+                max-width: 80%;
             }
         }
 
@@ -872,8 +882,20 @@
             
             /* Better toast for mobile */
             .toast {
-                max-width: calc(100% - 20px);
+                width: calc(100% - 20px);
+                padding: 10px 12px;
+            }
+            
+            .toast i {
+                font-size: 1.1rem;
+            }
+            
+            .toast-title {
                 font-size: 0.9rem;
+            }
+            
+            .toast-message {
+                font-size: 0.8rem;
             }
             
             /* Print buttons for mobile */
@@ -970,6 +992,11 @@
             .print-btn button {
                 flex: 1 1 calc(50% - 4px);
             }
+            
+            /* Toast adjustments */
+            .toast {
+                max-width: 350px;
+            }
         }
 
         /* Larger screens adjustments */
@@ -1039,7 +1066,12 @@
             .toast {
                 left: auto;
                 right: 15px;
+                transform: translateX(0) translateY(100%);
                 max-width: 350px;
+            }
+            
+            .toast.show {
+                transform: translateX(0) translateY(0);
             }
         }
 
@@ -1880,143 +1912,97 @@
             function printResults() {
                 showToast('Preparando relatório de resultados...', 'info');
                 
-                // Criar um elemento temporário para capturar o conteúdo
-                const tempElement = document.createElement('div');
-                tempElement.style.position = 'absolute';
-                tempElement.style.left = '-9999px';
-                tempElement.style.width = isMobileDevice() ? '95%' : '800px';
-                tempElement.style.padding = '20px';
-                tempElement.style.backgroundColor = 'white';
-                tempElement.style.fontFamily = "'Poppins', sans-serif";
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                // Configurações do PDF
+                const margin = 15;
+                const pageWidth = pdf.internal.pageSize.getWidth() - 2 * margin;
+                const lineHeight = 7;
+                let yPos = margin;
                 
                 // Adicionar cabeçalho
-                tempElement.innerHTML = `
-                    <div style="text-align: center; margin-bottom: 20px; border-bottom: 1px solid #e9ecef; padding-bottom: 15px;">
-                        <h1 style="color: #4361ee; margin-bottom: 5px; font-size: ${isMobileDevice() ? '1.4rem' : '1.8rem'};">FoodFinances</h1>
-                        <h2 style="color: #4361ee; margin-bottom: 10px; font-size: ${isMobileDevice() ? '1.2rem' : '1.4rem'};">Relatório de Resultados</h2>
-                        <p style="color: #6c757d; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${new Date().toLocaleDateString()}</p>
-                    </div>
+                pdf.setFont('helvetica', 'bold');
+                pdf.setTextColor(67, 97, 238);
+                pdf.setFontSize(18);
+                pdf.text('FoodFinances', pageWidth / 2 + margin, yPos, { align: 'center' });
+                
+                pdf.setFontSize(14);
+                pdf.text('Relatório de Resultados Financeiros', pageWidth / 2 + margin, yPos + lineHeight, { align: 'center' });
+                
+                pdf.setFontSize(10);
+                pdf.setTextColor(100, 100, 100);
+                pdf.text(`Gerado em: ${new Date().toLocaleDateString()}`, pageWidth / 2 + margin, yPos + 2 * lineHeight, { align: 'center' });
+                
+                yPos += 3 * lineHeight;
+                
+                // Adicionar informações do produto
+                pdf.setFont('helvetica', 'bold');
+                pdf.setTextColor(0, 0, 0);
+                pdf.setFontSize(12);
+                pdf.text('Informações do Produto', margin, yPos);
+                yPos += lineHeight;
+                
+                pdf.setFont('helvetica', 'normal');
+                pdf.text(`Nome: ${currentProduct.name || 'Não informado'}`, margin, yPos);
+                yPos += lineHeight;
+                
+                pdf.text(`Rendimento: ${currentProduct.yield} unidades`, margin, yPos);
+                yPos += lineHeight;
+                
+                pdf.text(`Descrição: ${currentProduct.description || 'Não informada'}`, margin, yPos);
+                yPos += lineHeight * 1.5;
+                
+                // Adicionar resultados financeiros
+                pdf.setFont('helvetica', 'bold');
+                pdf.text('Resultados Financeiros', margin, yPos);
+                yPos += lineHeight;
+                
+                // Função para adicionar linha de resultado
+                const addResultLine = (label, value, isProfit = false) => {
+                    pdf.setFont('helvetica', 'normal');
+                    pdf.setTextColor(0, 0, 0);
+                    pdf.text(label, margin, yPos);
                     
-                    <div style="margin-bottom: 20px;">
-                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 8px; margin-bottom: 12px; font-size: ${isMobileDevice() ? '1.1rem' : '1.3rem'};">Informações do Produto</h3>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                            <div>
-                                <p style="margin-bottom: 8px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Nome:</strong> ${currentProduct.name || 'Não informado'}</p>
-                                <p style="margin-bottom: 8px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Rendimento:</strong> ${currentProduct.yield} unidades</p>
-                            </div>
-                            <div>
-                                <p style="margin-bottom: 8px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Descrição:</strong> ${currentProduct.description || 'Não informada'}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                // Adicionar resultados em uma tabela responsiva
-                tempElement.innerHTML += `
-                    <div style="margin-bottom: 20px;">
-                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 8px; margin-bottom: 12px; font-size: ${isMobileDevice() ? '1.1rem' : '1.3rem'};">Resultados Financeiros</h3>
-                        <div style="overflow-x: auto;">
-                            <table style="width: 100%; border-collapse: collapse;">
-                                <thead>
-                                    <tr style="background-color: #4361ee; color: white;">
-                                        <th style="padding: 10px; text-align: left; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'};">Item</th>
-                                        <th style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'};">Valor</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr style="border-bottom: 1px solid #e9ecef;">
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Custo Total da Receita</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${formatCurrency(currentProduct.totalCost)}</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #e9ecef;">
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Custo por Unidade</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${formatCurrency(currentProduct.unitCost)}</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #e9ecef;">
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Preço de Venda Sugerido</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${formatCurrency(currentProduct.suggestedPrice)}</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #e9ecef;">
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Preço de Venda no iFood</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${formatCurrency(currentProduct.ifoodPrice)}</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #e9ecef;">
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Lucro por Unidade (Venda Direta)</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'}; color: ${currentProduct.unitProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.unitProfit)}</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #e9ecef;">
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Lucro por Unidade (iFood)</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'}; color: ${currentProduct.ifoodProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.ifoodProfit)}</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #e9ecef;">
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Margem de Lucro</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'}; color: ${currentProduct.profitMargin >= 0 ? '#38b000' : '#f72585'}">${currentProduct.profitMargin}%</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Lucro Total da Receita</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'}; color: ${currentProduct.totalProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.totalProfit)}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                `;
-                
-                // Adicionar rodapé
-                tempElement.innerHTML += `
-                    <div style="text-align: center; color: #6c757d; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'}; margin-top: 20px; border-top: 1px solid #e9ecef; padding-top: 10px;">
-                        <p>FoodFinances - Sistema de Gestão Financeira para Microempreendedores</p>
-                        <p>Relatório gerado em ${new Date().toLocaleString()}</p>
-                    </div>
-                `;
-                
-                document.body.appendChild(tempElement);
-                
-                // Configurações para geração do PDF
-                const pdfOptions = {
-                    scale: isMobileDevice() ? 2 : 3, // Maior escala para melhor qualidade
-                    useCORS: true, // Permitir recursos cross-origin
-                    scrollX: 0,
-                    scrollY: 0,
-                    windowWidth: tempElement.scrollWidth,
-                    windowHeight: tempElement.scrollHeight,
-                    logging: false // Desativar logs para melhor performance
+                    pdf.setFont('helvetica', 'bold');
+                    if (isProfit) {
+                        const isPositive = parseFloat(value) >= 0;
+                        pdf.setTextColor(isPositive ? 56 : 247, isPositive ? 176 : 37, isPositive ? 0 : 133);
+                    }
+                    
+                    pdf.text(value, pageWidth + margin, yPos, { align: 'right' });
+                    yPos += lineHeight;
+                    
+                    // Resetar cor
+                    pdf.setTextColor(0, 0, 0);
                 };
                 
-                html2canvas(tempElement, pdfOptions).then(canvas => {
-                    const { jsPDF } = window.jspdf;
-                    
-                    // Configurações do PDF baseadas no dispositivo
-                    const pdf = new jsPDF({
-                        orientation: isMobileDevice() ? 'portrait' : 'landscape',
-                        unit: 'mm',
-                        format: 'a4'
-                    });
-                    
-                    // Adicionar margens ao PDF
-                    const marginLeft = 10;
-                    const marginTop = 10;
-                    const pdfWidth = pdf.internal.pageSize.getWidth() - marginLeft * 2;
-                    
-                    // Calcular altura proporcional
-                    const imgData = canvas.toDataURL('image/png', 1.0);
-                    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-                    
-                    // Adicionar imagem ao PDF
-                    pdf.addImage(imgData, 'PNG', marginLeft, marginTop, pdfWidth, imgHeight);
-                    
-                    // Salvar o PDF
-                    pdf.save(`FoodFinances_Resultados_${currentProduct.name || 'produto'}_${new Date().toISOString().slice(0, 10)}.pdf`);
-                    
-                    // Remover elemento temporário
-                    document.body.removeChild(tempElement);
-                    
-                    showToast('Relatório exportado com sucesso!', 'success');
-                }).catch(err => {
-                    console.error('Erro ao gerar PDF:', err);
-                    document.body.removeChild(tempElement);
-                    showToast('Erro ao exportar relatório', 'error');
-                });
+                addResultLine('Custo Total da Receita:', formatCurrency(currentProduct.totalCost));
+                addResultLine('Custo por Unidade:', formatCurrency(currentProduct.unitCost));
+                addResultLine('Preço de Venda Sugerido:', formatCurrency(currentProduct.suggestedPrice));
+                addResultLine('Preço de Venda no iFood:', formatCurrency(currentProduct.ifoodPrice));
+                addResultLine('Lucro por Unidade (Venda Direta):', formatCurrency(currentProduct.unitProfit), true);
+                addResultLine('Lucro por Unidade (iFood):', formatCurrency(currentProduct.ifoodProfit), true);
+                addResultLine('Margem de Lucro:', `${currentProduct.profitMargin}%`, true);
+                addResultLine('Lucro Total da Receita:', formatCurrency(currentProduct.totalProfit), true);
+                
+                yPos += lineHeight * 0.5;
+                
+                // Adicionar rodapé
+                pdf.setFont('helvetica', 'italic');
+                pdf.setFontSize(8);
+                pdf.setTextColor(100, 100, 100);
+                pdf.text('FoodFinances - Sistema de Gestão Financeira para Microempreendedores', 
+                        pageWidth / 2 + margin, pdf.internal.pageSize.getHeight() - margin, 
+                        { align: 'center' });
+                
+                // Salvar o PDF
+                pdf.save(`FoodFinances_Resultados_${currentProduct.name || 'produto'}_${new Date().toISOString().slice(0, 10)}.pdf`);
+                showToast('Relatório exportado com sucesso!', 'success');
             }
 
             function printChart() {
@@ -2025,99 +2011,68 @@
                 const canvas = document.getElementById('profitChart');
                 const { jsPDF } = window.jspdf;
                 
-                // Criar PDF com orientação baseada no dispositivo
+                // Criar PDF com orientação paisagem para melhor visualização
                 const pdf = new jsPDF({
-                    orientation: isMobileDevice() ? 'portrait' : 'landscape',
+                    orientation: 'landscape',
                     unit: 'mm',
                     format: 'a4'
                 });
                 
                 // Configurar margens
-                const marginLeft = 15;
-                const marginTop = 15;
-                const pdfWidth = pdf.internal.pageSize.getWidth() - marginLeft * 2;
+                const margin = 15;
+                const pageWidth = pdf.internal.pageSize.getWidth() - 2 * margin;
+                const pageHeight = pdf.internal.pageSize.getHeight() - 2 * margin;
                 
                 // Adicionar cabeçalho
                 pdf.setFont('helvetica', 'bold');
                 pdf.setTextColor(67, 97, 238);
                 pdf.setFontSize(16);
-                pdf.text('FoodFinances - Análise Gráfica', pdf.internal.pageSize.getWidth() / 2, marginTop, { align: 'center' });
+                pdf.text('FoodFinances - Análise Gráfica', pageWidth / 2 + margin, margin, { align: 'center' });
                 
                 pdf.setFontSize(12);
                 pdf.setTextColor(0, 0, 0);
-                pdf.text(`Produto: ${currentProduct.name || 'Não informado'}`, marginLeft, marginTop + 10);
-                pdf.text(`Data: ${new Date().toLocaleDateString()}`, marginLeft, marginTop + 15);
+                pdf.text(`Produto: ${currentProduct.name || 'Não informado'}`, margin, margin + 10);
+                pdf.text(`Data: ${new Date().toLocaleDateString()}`, margin, margin + 16);
                 
                 // Adicionar gráfico
                 const imgData = canvas.toDataURL('image/png', 1.0);
-                const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+                const imgWidth = pageWidth * 0.9;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
                 
-                // Verificar se o gráfico cabe em uma página
-                if (marginTop + imgHeight + 30 < pdf.internal.pageSize.getHeight()) {
-                    // Adicionar gráfico na primeira página
-                    pdf.addImage(imgData, 'PNG', marginLeft, marginTop + 20, pdfWidth, imgHeight);
+                // Centralizar o gráfico na página
+                const imgX = (pdf.internal.pageSize.getWidth() - imgWidth) / 2;
+                const imgY = margin + 25;
+                
+                pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth, imgHeight);
+                
+                // Adicionar legenda
+                const legendY = imgY + imgHeight + 10;
+                pdf.setFontSize(10);
+                pdf.text('Legenda:', margin, legendY);
+                
+                // Itens da legenda
+                const legendItems = [
+                    { color: [108, 117, 125], text: 'Custo Unitário' },
+                    { color: [56, 176, 0], text: 'Lucro Venda Direta' },
+                    { color: [67, 97, 238], text: 'Lucro iFood' }
+                ];
+                
+                let currentLegendY = legendY + 5;
+                legendItems.forEach(item => {
+                    // Caixa de cor
+                    pdf.setFillColor(item.color[0], item.color[1], item.color[2]);
+                    pdf.rect(margin, currentLegendY - 2, 4, 4, 'F');
                     
-                    // Adicionar legenda
-                    pdf.setFontSize(10);
-                    pdf.text('Legenda:', marginLeft, marginTop + imgHeight + 25);
-                    
-                    // Itens da legenda
-                    const legendItems = [
-                        { color: [108, 117, 125], text: 'Custo Unitário' },
-                        { color: [56, 176, 0], text: 'Lucro Venda Direta' },
-                        { color: [67, 97, 238], text: 'Lucro iFood' }
-                    ];
-                    
-                    let legendY = marginTop + imgHeight + 30;
-                    legendItems.forEach(item => {
-                        // Caixa de cor
-                        pdf.setFillColor(item.color[0], item.color[1], item.color[2]);
-                        pdf.rect(marginLeft, legendY - 2, 4, 4, 'F');
-                        
-                        // Texto da legenda
-                        pdf.text(item.text, marginLeft + 6, legendY);
-                        legendY += 5;
-                    });
-                } else {
-                    // Se não couber, dividir em duas páginas
-                    const ratio = (pdf.internal.pageSize.getHeight() - marginTop - 30) / imgHeight;
-                    
-                    // Primeira página com parte do gráfico
-                    pdf.addImage(imgData, 'PNG', marginLeft, marginTop + 20, pdfWidth * ratio, imgHeight * ratio);
-                    
-                    // Segunda página com o restante
-                    pdf.addPage();
-                    pdf.addImage(imgData, 'PNG', marginLeft, 10, pdfWidth * (1 - ratio), imgHeight * (1 - ratio), 
-                                0, imgHeight * ratio, canvas.width, canvas.height);
-                    
-                    // Adicionar legenda na segunda página
-                    pdf.setFontSize(10);
-                    pdf.text('Legenda:', marginLeft, 20);
-                    
-                    // Itens da legenda
-                    const legendItems = [
-                        { color: [108, 117, 125], text: 'Custo Unitário' },
-                        { color: [56, 176, 0], text: 'Lucro Venda Direta' },
-                        { color: [67, 97, 238], text: 'Lucro iFood' }
-                    ];
-                    
-                    let legendY = 25;
-                    legendItems.forEach(item => {
-                        // Caixa de cor
-                        pdf.setFillColor(item.color[0], item.color[1], item.color[2]);
-                        pdf.rect(marginLeft, legendY - 2, 4, 4, 'F');
-                        
-                        // Texto da legenda
-                        pdf.text(item.text, marginLeft + 6, legendY);
-                        legendY += 5;
-                    });
-                }
+                    // Texto da legenda
+                    pdf.text(item.text, margin + 6, currentLegendY);
+                    currentLegendY += 5;
+                });
                 
                 // Rodapé
                 pdf.setFontSize(9);
                 pdf.setTextColor(100, 100, 100);
                 pdf.text('FoodFinances - Sistema de Gestão Financeira para Microempreendedores', 
-                        pdf.internal.pageSize.getWidth() / 2, pdf.internal.pageSize.getHeight() - 10, 
+                        pageWidth / 2 + margin, pdf.internal.pageSize.getHeight() - margin, 
                         { align: 'center' });
                 
                 pdf.save(`FoodFinances_Grafico_${currentProduct.name || 'produto'}_${new Date().toISOString().slice(0, 10)}.pdf`);
@@ -2127,267 +2082,244 @@
             function printFullReport() {
                 showToast('Preparando relatório completo...', 'info');
                 
-                // Criar um elemento temporário para capturar todo o conteúdo
-                const tempElement = document.createElement('div');
-                tempElement.style.position = 'absolute';
-                tempElement.style.left = '-9999px';
-                tempElement.style.width = isMobileDevice() ? '95%' : '800px';
-                tempElement.style.padding = '20px';
-                tempElement.style.backgroundColor = 'white';
-                tempElement.style.fontFamily = "'Poppins', sans-serif";
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                // Configurações do PDF
+                const margin = 15;
+                const pageWidth = pdf.internal.pageSize.getWidth() - 2 * margin;
+                const lineHeight = 7;
+                let yPos = margin;
                 
                 // Adicionar cabeçalho
-                tempElement.innerHTML = `
-                    <div style="text-align: center; margin-bottom: 20px; border-bottom: 1px solid #e9ecef; padding-bottom: 15px;">
-                        <h1 style="color: #4361ee; margin-bottom: 5px; font-size: ${isMobileDevice() ? '1.4rem' : '1.8rem'};">FoodFinances</h1>
-                        <h2 style="color: #4361ee; margin-bottom: 10px; font-size: ${isMobileDevice() ? '1.2rem' : '1.4rem'};">Relatório Completo de Análise</h2>
-                        <p style="color: #6c757d; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${new Date().toLocaleDateString()}</p>
-                    </div>
-                    
-                    <div style="margin-bottom: 20px;">
-                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 8px; margin-bottom: 12px; font-size: ${isMobileDevice() ? '1.1rem' : '1.3rem'};">Informações do Produto</h3>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                            <div>
-                                <p style="margin-bottom: 8px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Nome:</strong> ${currentProduct.name || 'Não informado'}</p>
-                                <p style="margin-bottom: 8px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Rendimento:</strong> ${currentProduct.yield} unidades</p>
-                            </div>
-                            <div>
-                                <p style="margin-bottom: 8px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Descrição:</strong> ${currentProduct.description || 'Não informada'}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                pdf.setFont('helvetica', 'bold');
+                pdf.setTextColor(67, 97, 238);
+                pdf.setFontSize(18);
+                pdf.text('FoodFinances', pageWidth / 2 + margin, yPos, { align: 'center' });
+                
+                pdf.setFontSize(14);
+                pdf.text('Relatório Completo de Análise', pageWidth / 2 + margin, yPos + lineHeight, { align: 'center' });
+                
+                pdf.setFontSize(10);
+                pdf.setTextColor(100, 100, 100);
+                pdf.text(`Gerado em: ${new Date().toLocaleDateString()}`, pageWidth / 2 + margin, yPos + 2 * lineHeight, { align: 'center' });
+                
+                yPos += 3 * lineHeight;
+                
+                // Adicionar informações do produto
+                pdf.setFont('helvetica', 'bold');
+                pdf.setTextColor(0, 0, 0);
+                pdf.setFontSize(12);
+                pdf.text('Informações do Produto', margin, yPos);
+                yPos += lineHeight;
+                
+                pdf.setFont('helvetica', 'normal');
+                pdf.text(`Nome: ${currentProduct.name || 'Não informado'}`, margin, yPos);
+                yPos += lineHeight;
+                
+                pdf.text(`Rendimento: ${currentProduct.yield} unidades`, margin, yPos);
+                yPos += lineHeight;
+                
+                pdf.text(`Descrição: ${currentProduct.description || 'Não informada'}`, margin, yPos);
+                yPos += lineHeight * 1.5;
                 
                 // Adicionar resultados financeiros
-                tempElement.innerHTML += `
-                    <div style="margin-bottom: 20px;">
-                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 8px; margin-bottom: 12px; font-size: ${isMobileDevice() ? '1.1rem' : '1.3rem'};">Resultados Financeiros</h3>
-                        <div style="overflow-x: auto;">
-                            <table style="width: 100%; border-collapse: collapse;">
-                                <thead>
-                                    <tr style="background-color: #4361ee; color: white;">
-                                        <th style="padding: 10px; text-align: left; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'};">Item</th>
-                                        <th style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'};">Valor</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr style="border-bottom: 1px solid #e9ecef;">
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Custo Total da Receita</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${formatCurrency(currentProduct.totalCost)}</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #e9ecef;">
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Custo por Unidade</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${formatCurrency(currentProduct.unitCost)}</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #e9ecef;">
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Preço de Venda Sugerido</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${formatCurrency(currentProduct.suggestedPrice)}</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #e9ecef;">
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Preço de Venda no iFood</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${formatCurrency(currentProduct.ifoodPrice)}</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #e9ecef;">
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Lucro por Unidade (Venda Direta)</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'}; color: ${currentProduct.unitProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.unitProfit)}</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #e9ecef;">
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Lucro por Unidade (iFood)</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'}; color: ${currentProduct.ifoodProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.ifoodProfit)}</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #e9ecef;">
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Margem de Lucro</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'}; color: ${currentProduct.profitMargin >= 0 ? '#38b000' : '#f72585'}">${currentProduct.profitMargin}%</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Lucro Total da Receita</td>
-                                        <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'}; color: ${currentProduct.totalProfit >= 0 ? '#38b000' : '#f72585'}">${formatCurrency(currentProduct.totalProfit)}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                `;
+                pdf.setFont('helvetica', 'bold');
+                pdf.text('Resultados Financeiros', margin, yPos);
+                yPos += lineHeight;
                 
-                // Adicionar gráfico
-                const chartCanvas = document.getElementById('profitChart');
-                const chartImg = chartCanvas.toDataURL('image/png');
-                tempElement.innerHTML += `
-                    <div style="margin-bottom: 20px;">
-                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 8px; margin-bottom: 12px; font-size: ${isMobileDevice() ? '1.1rem' : '1.3rem'};">Análise Gráfica</h3>
-                        <div style="text-align: center; margin-bottom: 15px;">
-                            <img src="${chartImg}" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                        </div>
-                        <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <div style="width: 12px; height: 12px; background-color: #6c757d; border-radius: 2px;"></div>
-                                <span style="font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Custo Unitário</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <div style="width: 12px; height: 12px; background-color: #38b000; border-radius: 2px;"></div>
-                                <span style="font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Lucro Venda Direta</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <div style="width: 12px; height: 12px; background-color: #4361ee; border-radius: 2px;"></div>
-                                <span style="font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Lucro iFood</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                // Função para adicionar linha de resultado
+                const addResultLine = (label, value, isProfit = false) => {
+                    pdf.setFont('helvetica', 'normal');
+                    pdf.setTextColor(0, 0, 0);
+                    pdf.text(label, margin, yPos);
+                    
+                    pdf.setFont('helvetica', 'bold');
+                    if (isProfit) {
+                        const isPositive = parseFloat(value) >= 0;
+                        pdf.setTextColor(isPositive ? 56 : 247, isPositive ? 176 : 37, isPositive ? 0 : 133);
+                    }
+                    
+                    pdf.text(value, pageWidth + margin, yPos, { align: 'right' });
+                    yPos += lineHeight;
+                    
+                    // Resetar cor
+                    pdf.setTextColor(0, 0, 0);
+                };
                 
-                // Adicionar detalhes de ingredientes e embalagens
+                addResultLine('Custo Total da Receita:', formatCurrency(currentProduct.totalCost));
+                addResultLine('Custo por Unidade:', formatCurrency(currentProduct.unitCost));
+                addResultLine('Preço de Venda Sugerido:', formatCurrency(currentProduct.suggestedPrice));
+                addResultLine('Preço de Venda no iFood:', formatCurrency(currentProduct.ifoodPrice));
+                addResultLine('Lucro por Unidade (Venda Direta):', formatCurrency(currentProduct.unitProfit), true);
+                addResultLine('Lucro por Unidade (iFood):', formatCurrency(currentProduct.ifoodProfit), true);
+                addResultLine('Margem de Lucro:', `${currentProduct.profitMargin}%`, true);
+                addResultLine('Lucro Total da Receita:', formatCurrency(currentProduct.totalProfit), true);
+                
+                yPos += lineHeight * 0.5;
+                
+                // Adicionar gráfico (em uma nova página)
+                pdf.addPage();
+                yPos = margin;
+                
+                pdf.setFont('helvetica', 'bold');
+                pdf.setTextColor(0, 0, 0);
+                pdf.setFontSize(12);
+                pdf.text('Análise Gráfica', margin, yPos);
+                yPos += lineHeight;
+                
+                const canvas = document.getElementById('profitChart');
+                const imgData = canvas.toDataURL('image/png', 1.0);
+                const imgWidth = pageWidth * 0.9;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                // Centralizar o gráfico na página
+                const imgX = (pdf.internal.pageSize.getWidth() - imgWidth) / 2;
+                const imgY = yPos + 5;
+                
+                pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth, imgHeight);
+                yPos += imgHeight + 15;
+                
+                // Adicionar legenda
+                pdf.setFontSize(10);
+                pdf.text('Legenda:', margin, yPos);
+                yPos += 5;
+                
+                // Itens da legenda
+                const legendItems = [
+                    { color: [108, 117, 125], text: 'Custo Unitário' },
+                    { color: [56, 176, 0], text: 'Lucro Venda Direta' },
+                    { color: [67, 97, 238], text: 'Lucro iFood' }
+                ];
+                
+                legendItems.forEach(item => {
+                    // Caixa de cor
+                    pdf.setFillColor(item.color[0], item.color[1], item.color[2]);
+                    pdf.rect(margin, yPos - 2, 4, 4, 'F');
+                    
+                    // Texto da legenda
+                    pdf.text(item.text, margin + 6, yPos);
+                    yPos += 5;
+                });
+                
+                // Adicionar detalhes de ingredientes (em uma nova página)
                 if (currentProduct.ingredients.length > 0) {
-                    tempElement.innerHTML += `
-                        <div style="margin-bottom: 20px;">
-                            <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 8px; margin-bottom: 12px; font-size: ${isMobileDevice() ? '1.1rem' : '1.3rem'};">Ingredientes</h3>
-                            <div style="overflow-x: auto;">
-                                <table style="width: 100%; border-collapse: collapse;">
-                                    <thead>
-                                        <tr style="background-color: #4361ee; color: white;">
-                                            <th style="padding: 10px; text-align: left; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'};">Nome</th>
-                                            <th style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'};">Quantidade</th>
-                                            <th style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'};">Custo (R$)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ${currentProduct.ingredients.map(ing => `
-                                            <tr style="border-bottom: 1px solid #e9ecef;">
-                                                <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${ing.name}</td>
-                                                <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${ing.quantity} ${ing.unit}</td>
-                                                <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${formatCurrency(ing.price)}</td>
-                                            </tr>
-                                        `).join('')}
-                                        <tr style="font-weight: bold;">
-                                            <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Total</td>
-                                            <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${currentProduct.ingredients.reduce((sum, ing) => sum + ing.quantity, 0).toFixed(2)} ${currentProduct.ingredients[0]?.unit || ''}</td>
-                                            <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${formatCurrency(currentProduct.ingredients.reduce((sum, ing) => sum + ing.price, 0))}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    `;
+                    pdf.addPage();
+                    yPos = margin;
+                    
+                    pdf.setFont('helvetica', 'bold');
+                    pdf.setFontSize(12);
+                    pdf.text('Detalhes dos Ingredientes', margin, yPos);
+                    yPos += lineHeight;
+                    
+                    // Cabeçalho da tabela
+                    pdf.setFont('helvetica', 'bold');
+                    pdf.setFontSize(10);
+                    pdf.text('Nome', margin, yPos);
+                    pdf.text('Quantidade', margin + 70, yPos);
+                    pdf.text('Custo', pageWidth + margin, yPos, { align: 'right' });
+                    yPos += lineHeight;
+                    
+                    // Linhas da tabela
+                    pdf.setFont('helvetica', 'normal');
+                    currentProduct.ingredients.forEach(ing => {
+                        if (yPos > pdf.internal.pageSize.getHeight() - 20) {
+                            pdf.addPage();
+                            yPos = margin;
+                        }
+                        
+                        pdf.text(ing.name, margin, yPos);
+                        pdf.text(`${ing.quantity} ${ing.unit}`, margin + 70, yPos);
+                        pdf.text(formatCurrency(ing.price), pageWidth + margin, yPos, { align: 'right' });
+                        yPos += lineHeight;
+                    });
+                    
+                    // Total
+                    pdf.setFont('helvetica', 'bold');
+                    pdf.text('Total:', margin + 70, yPos);
+                    pdf.text(formatCurrency(currentProduct.ingredients.reduce((sum, ing) => sum + ing.price, 0)), 
+                            pageWidth + margin, yPos, { align: 'right' });
+                    yPos += lineHeight * 1.5;
                 }
                 
+                // Adicionar detalhes de embalagens (em uma nova página se necessário)
                 if (currentProduct.packaging.length > 0) {
-                    tempElement.innerHTML += `
-                        <div style="margin-bottom: 20px;">
-                            <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 8px; margin-bottom: 12px; font-size: ${isMobileDevice() ? '1.1rem' : '1.3rem'};">Embalagens</h3>
-                            <div style="overflow-x: auto;">
-                                <table style="width: 100%; border-collapse: collapse;">
-                                    <thead>
-                                        <tr style="background-color: #4361ee; color: white;">
-                                            <th style="padding: 10px; text-align: left; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'};">Nome</th>
-                                            <th style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'};">Quantidade</th>
-                                            <th style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'};">Custo (R$)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ${currentProduct.packaging.map(pack => `
-                                            <tr style="border-bottom: 1px solid #e9ecef;">
-                                                <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${pack.name}</td>
-                                                <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${pack.quantity} un</td>
-                                                <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${formatCurrency(pack.price)}</td>
-                                            </tr>
-                                        `).join('')}
-                                        <tr style="font-weight: bold;">
-                                            <td style="padding: 10px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">Total</td>
-                                            <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${currentProduct.packaging.reduce((sum, pack) => sum + pack.quantity, 0)} un</td>
-                                            <td style="padding: 10px; text-align: right; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};">${formatCurrency(currentProduct.packaging.reduce((sum, pack) => sum + pack.price, 0))}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    `;
+                    if (yPos > pdf.internal.pageSize.getHeight() - 30) {
+                        pdf.addPage();
+                        yPos = margin;
+                    }
+                    
+                    pdf.setFont('helvetica', 'bold');
+                    pdf.setFontSize(12);
+                    pdf.text('Detalhes da Embalagem', margin, yPos);
+                    yPos += lineHeight;
+                    
+                    // Cabeçalho da tabela
+                    pdf.setFont('helvetica', 'bold');
+                    pdf.setFontSize(10);
+                    pdf.text('Nome', margin, yPos);
+                    pdf.text('Quantidade', margin + 70, yPos);
+                    pdf.text('Custo', pageWidth + margin, yPos, { align: 'right' });
+                    yPos += lineHeight;
+                    
+                    // Linhas da tabela
+                    pdf.setFont('helvetica', 'normal');
+                    currentProduct.packaging.forEach(pack => {
+                        if (yPos > pdf.internal.pageSize.getHeight() - 20) {
+                            pdf.addPage();
+                            yPos = margin;
+                        }
+                        
+                        pdf.text(pack.name, margin, yPos);
+                        pdf.text(`${pack.quantity} un`, margin + 70, yPos);
+                        pdf.text(formatCurrency(pack.price), pageWidth + margin, yPos, { align: 'right' });
+                        yPos += lineHeight;
+                    });
+                    
+                    // Total
+                    pdf.setFont('helvetica', 'bold');
+                    pdf.text('Total:', margin + 70, yPos);
+                    pdf.text(formatCurrency(currentProduct.packaging.reduce((sum, pack) => sum + pack.price, 0)), 
+                            pageWidth + margin, yPos, { align: 'right' });
+                    yPos += lineHeight * 1.5;
                 }
                 
                 // Adicionar configurações do iFood
-                tempElement.innerHTML += `
-                    <div style="margin-bottom: 20px;">
-                        <h3 style="color: #4361ee; border-bottom: 1px solid #e9ecef; padding-bottom: 8px; margin-bottom: 12px; font-size: ${isMobileDevice() ? '1.1rem' : '1.3rem'};">Configurações do iFood</h3>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                            <div>
-                                <p style="margin-bottom: 8px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Taxa do iFood:</strong> ${currentProduct.ifoodFee}%</p>
-                                <p style="margin-bottom: 8px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Taxa de Entrega:</strong> ${formatCurrency(currentProduct.deliveryFee)}</p>
-                            </div>
-                            <div>
-                                <p style="margin-bottom: 8px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Preço de Venda:</strong> ${formatCurrency(currentProduct.salePrice)}</p>
-                                <p style="margin-bottom: 8px; font-size: ${isMobileDevice() ? '0.9rem' : '1rem'};"><strong>Custos Adicionais:</strong> ${formatCurrency(currentProduct.additionalCosts)}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                if (yPos > pdf.internal.pageSize.getHeight() - 30) {
+                    pdf.addPage();
+                    yPos = margin;
+                }
                 
-                // Adicionar rodapé
-                tempElement.innerHTML += `
-                    <div style="text-align: center; color: #6c757d; font-size: ${isMobileDevice() ? '0.8rem' : '0.9rem'}; margin-top: 20px; border-top: 1px solid #e9ecef; padding-top: 10px;">
-                        <p>FoodFinances - Sistema de Gestão Financeira para Microempreendedores</p>
-                        <p>Relatório gerado em ${new Date().toLocaleString()}</p>
-                    </div>
-                `;
+                pdf.setFont('helvetica', 'bold');
+                pdf.setFontSize(12);
+                pdf.text('Configurações do iFood', margin, yPos);
+                yPos += lineHeight;
                 
-                document.body.appendChild(tempElement);
+                pdf.setFont('helvetica', 'normal');
+                pdf.text(`Taxa do iFood: ${currentProduct.ifoodFee}%`, margin, yPos);
+                yPos += lineHeight;
                 
-                // Configurações para geração do PDF
-                const pdfOptions = {
-                    scale: isMobileDevice() ? 2 : 3, // Maior escala para melhor qualidade
-                    useCORS: true, // Permitir recursos cross-origin
-                    scrollX: 0,
-                    scrollY: 0,
-                    windowWidth: tempElement.scrollWidth,
-                    windowHeight: tempElement.scrollHeight,
-                    logging: false // Desativar logs para melhor performance
-                };
+                pdf.text(`Taxa de Entrega: ${formatCurrency(currentProduct.deliveryFee)}`, margin, yPos);
+                yPos += lineHeight;
                 
-                html2canvas(tempElement, pdfOptions).then(canvas => {
-                    const { jsPDF } = window.jspdf;
-                    
-                    // Configurações do PDF baseadas no dispositivo
-                    const pdf = new jsPDF({
-                        orientation: isMobileDevice() ? 'portrait' : 'landscape',
-                        unit: 'mm',
-                        format: 'a4'
-                    });
-                    
-                    // Adicionar margens ao PDF
-                    const marginLeft = 10;
-                    const marginTop = 10;
-                    const pdfWidth = pdf.internal.pageSize.getWidth() - marginLeft * 2;
-                    
-                    // Calcular altura proporcional
-                    const imgData = canvas.toDataURL('image/png', 1.0);
-                    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-                    
-                    // Verificar se o conteúdo cabe em uma página
-                    if (marginTop + imgHeight + 20 < pdf.internal.pageSize.getHeight()) {
-                        // Adicionar tudo em uma página
-                        pdf.addImage(imgData, 'PNG', marginLeft, marginTop, pdfWidth, imgHeight);
-                    } else {
-                        // Dividir em duas páginas
-                        const ratio = (pdf.internal.pageSize.getHeight() - marginTop - 20) / imgHeight;
-                        
-                        // Primeira página
-                        pdf.addImage(imgData, 'PNG', marginLeft, marginTop, pdfWidth, imgHeight * ratio);
-                        
-                        // Segunda página
-                        pdf.addPage();
-                        pdf.addImage(imgData, 'PNG', marginLeft, 10, pdfWidth, imgHeight * (1 - ratio), 
-                                    0, imgHeight * ratio, canvas.width, canvas.height);
-                    }
-                    
-                    // Salvar o PDF
-                    pdf.save(`FoodFinances_Relatorio_Completo_${currentProduct.name || 'produto'}_${new Date().toISOString().slice(0, 10)}.pdf`);
-                    
-                    // Remover elemento temporário
-                    document.body.removeChild(tempElement);
-                    
-                    showToast('Relatório completo exportado com sucesso!', 'success');
-                }).catch(err => {
-                    console.error('Erro ao gerar PDF:', err);
-                    document.body.removeChild(tempElement);
-                    showToast('Erro ao exportar relatório completo', 'error');
-                });
+                pdf.text(`Custos Adicionais: ${formatCurrency(currentProduct.additionalCosts)}`, margin, yPos);
+                yPos += lineHeight;
+                
+                // Adicionar rodapé na última página
+                pdf.setFont('helvetica', 'italic');
+                pdf.setFontSize(8);
+                pdf.setTextColor(100, 100, 100);
+                pdf.text('FoodFinances - Sistema de Gestão Financeira para Microempreendedores', 
+                        pageWidth / 2 + margin, pdf.internal.pageSize.getHeight() - margin, 
+                        { align: 'center' });
+                
+                // Salvar o PDF
+                pdf.save(`FoodFinances_Relatorio_Completo_${currentProduct.name || 'produto'}_${new Date().toISOString().slice(0, 10)}.pdf`);
+                showToast('Relatório completo exportado com sucesso!', 'success');
             }
 
             // Funções auxiliares
@@ -2399,13 +2331,20 @@
                     success: 'fa-check-circle'
                 };
 
+                const titles = {
+                    error: 'Erro',
+                    warning: 'Aviso',
+                    info: 'Informação',
+                    success: 'Sucesso'
+                };
+
                 toast.querySelector('i').className = `fas ${icons[type]}`;
                 toast.className = `toast ${type}`;
                 toastMessage.textContent = message;
                 
-                // Atualizar título baseado no tipo
+                // Atualizar título
                 const toastTitle = toast.querySelector('.toast-title');
-                toastTitle.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+                toastTitle.textContent = titles[type];
                 
                 toast.classList.add('show');
 
