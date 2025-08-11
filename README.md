@@ -56,8 +56,7 @@ cd foodfinances
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
+Este projeto está licenciado sob a licença MI.
 ## ✉️ Contato
 
 Desenvolvido por [Carlos Jhonne](https://github.com/JhonneSB)  
